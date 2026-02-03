@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>婚禮時間流程表</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 12mm;
+        }
+
+        @media print {
+            body { margin: 0; padding: 10px; font-size: 13px; }
+            .no-print { display: none; }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            th {
+                background: #d4145a !important;
+                color: white !important;
+            }
+            tr:nth-child(even) {
+                background: #f8f9fa !important;
+            }
+            .time-section {
+                background: #e3f2fd !important;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            background: #f5f5f5;
+            font-size: 13px;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 100%;
+        }
+
+        h1 {
+            color: #d4145a;
+            text-align: center;
+            border-bottom: 3px solid #d4145a;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffe8b3 100%);
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .info-box strong {
+            color: #d4145a;
+            font-size: 15px;
+        }
+
+        .time-section {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 12px 16px;
+            margin: 25px 0 12px 0;
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+            font-weight: bold;
+            font-size: 18px;
+            color: #1565c0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+
+        th {
+            background: #d4145a;
+            color: white;
+            padding: 12px 10px;
+            text-align: left;
+            font-weight: bold;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            vertical-align: top;
+            line-height: 1.7;
+            font-size: 13px;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        tr:hover {
+            background: #ffe8f0;
+        }
+
+        .time-col {
+            width: 100px;
+            font-weight: bold;
+            color: #d4145a;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        .highlight {
+            background: #fff3e0 !important;
+            font-weight: 500;
+        }
+
+        .important {
+            background: #ffebee !important;
+            font-weight: 500;
+        }
+
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #d4145a;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(212, 20, 90, 0.3);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .btn-print:hover {
+            background: #b0123e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 20, 90, 0.4);
+        }
+
+        .back-to-home {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #d4145a 0%, #ff5a8a 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 16px rgba(212, 20, 90, 0.3);
+            transition: all 0.3s ease;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-to-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 20, 90, 0.4);
+        }
+
+        @media print {
+            .back-to-home { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .back-to-home {
+                bottom: 16px;
+                right: 16px;
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-to-home">
+        <span>🏠</span>
+        <span>返回首頁</span>
+    </a>
+    <button class="btn-print no-print" onclick="window.print()">🖨️ 列印 / 存成 PDF</button>
+
+    <div class="container">
+        <h1>⏰ 婚禮時間流程表</h1>
+
+        <div class="info-box">
+            <strong>📌 基本資訊</strong><br>
+            📅 日期：2026年2月7日（星期六）午宴<br>
+            📍 地點：典華大直館 3F 閣樓<br>
+            👰 新娘：鍾佩璇 / 🤵 新郎：楊子擎<br>
+            🎯 規模：15 桌 / 158 人
+        </div>
+
+        <div class="time-section">📅 上午時段：準備階段（07:00–10:00）</div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="time-col">時間</th>
+                    <th>流程項目</th>
+                    <th>說明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="time-col">07:00</td>
+                    <td>新娘開妝</td>
+                    <td>佩璇＋璇媽一起開始化妝（新秘嫚嫚＋助理×2）<br>地點：沐蘭精品旅館</td>
+                </tr>
+                <tr>
+                    <td class="time-col">08:30</td>
+                    <td>新郎媽媽化妝</td>
+                    <td>新秘助理為新郎媽媽化妝</td>
+                </tr>
+                <tr>
+                    <td class="time-col">08:50</td>
+                    <td>新郎化妝</td>
+                    <td>新郎＋新秘團助理化妝</td>
+                </tr>
+                <tr>
+                    <td class="time-col">09:30</td>
+                    <td>新娘完妝</td>
+                    <td>新娘預計完妝，準備出發</td>
+                </tr>
+                <tr class="highlight">
+                    <td class="time-col">09:50</td>
+                    <td>禮車出發</td>
+                    <td>禮車從沐蘭出發前往典華<br>司機：羅奕鈞<br>確認所有物品已上車</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="time-section">🏛️ 上午時段：現場準備（10:00–11:50）</div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="time-col">時間</th>
+                    <th>流程項目</th>
+                    <th>說明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="important">
+                    <td class="time-col">10:00</td>
+                    <td>新人抵達典華</td>
+                    <td>璇姊錄影典華下車畫面<br>新人前往新娘休息室準備</td>
+                </tr>
+                <tr>
+                    <td class="time-col">10:00</td>
+                    <td>招待組到場</td>
+                    <td>女方禮金組＆招待帶位組開始布置<br>任務：禮金桌、迎賓桌、掛螢光棒、熟悉場地</td>
+                </tr>
+                <tr>
+                    <td class="time-col">10:00</td>
+                    <td>佈置廠商進場</td>
+                    <td>加購迪士尼派對版（魔髮奇緣）佈置</td>
+                </tr>
+                <tr>
+                    <td class="time-col">10:00–10:30</td>
+                    <td>總召開始工作</td>
+                    <td>若棻：確認氣球、物品、佈置、招待組安排</td>
+                </tr>
+                <tr>
+                    <td class="time-col">10:30</td>
+                    <td>男方收禮金到場</td>
+                    <td>楊依凡就位</td>
+                </tr>
+                <tr>
+                    <td class="time-col">10:30</td>
+                    <td>伴郎＆花童到場</td>
+                    <td>立凱、宣毅、品澄、品希到場</td>
+                </tr>
+                <tr>
+                    <td class="time-col">11:00–11:20</td>
+                    <td>總召任務（二）</td>
+                    <td>若棻：確認氣球、誓詞組、彩排準備</td>
+                </tr>
+                <tr class="highlight">
+                    <td class="time-col">11:20–11:50</td>
+                    <td>一進彩排</td>
+                    <td>花童、伴郎伴娘、新人、雙方父母進場彩排<br>確認走位、爆破氣球時間點<br>影音設備測試</td>
+                </tr>
+                <tr>
+                    <td class="time-col">11:30</td>
+                    <td>男方帶位到場</td>
+                    <td>小潘就位</td>
+                </tr>
+                <tr class="highlight">
+                    <td class="time-col">11:50–12:20</td>
+                    <td>迎賓時間</td>
+                    <td>所有招待至門口帶位<br>引導賓客入座、取用調酒<br>提供迎賓點心<br>輪播新人婚紗影片＋迎賓音樂</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="time-section">💒 午宴時段：正式宴會（12:20–14:30）</div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="time-col">時間</th>
+                    <th>流程項目</th>
+                    <th>說明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="important">
+                    <td class="time-col">12:20–12:30</td>
+                    <td>進場前準備</td>
+                    <td>總召最後確認：新娘爸爸氣球、爆破人員準備<br>集合進場人員門口定位<br>請主桌賓客入席</td>
+                </tr>
+                <tr class="highlight">
+                    <td class="time-col">12:30–12:50</td>
+                    <td>【一進】開場進場</td>
+                    <td>
+                        1. 主持人開場白<br>
+                        2. 播放迪士尼開幕影片（0:29）+ 婚紗側錄（3:14）<br>
+                        3. 進場順序：花童→儐相×2對→男方主婚人→新郎→新娘+媽媽→交手<br>
+                        4. <strong>🎈 新郎親吻新娘 → 爆破氣球×4</strong><br>
+                        5. 新人一起上台
+                    </td>
+                </tr>
+                <tr>
+                    <td class="time-col">12:50</td>
+                    <td>交換誓詞</td>
+                    <td>問新郎誓詞：麗晴、若棻<br>問新娘誓詞：Arbind（英文）、建翔<br>新人回答：我願意</td>
+                </tr>
+                <tr>
+                    <td class="time-col">12:50</td>
+                    <td>結婚儀式</td>
+                    <td>香檳儀式<br>新郎致謝詞<br>舉杯儀式（雙方主婚人+新人舉杯）</td>
+                </tr>
+                <tr>
+                    <td class="time-col">12:50</td>
+                    <td>宴會開始</td>
+                    <td>開始上菜<br>輪播新人生活影片<br>上菜時間約1小時40分鐘</td>
+                </tr>
+                <tr>
+                    <td class="time-col">12:55–13:25</td>
+                    <td>新人用餐＆換裝</td>
+                    <td>新人於主桌用餐5分鐘或直接換裝<br>換第二套禮服<br>造型時間20-25分鐘</td>
+                </tr>
+                <tr class="highlight">
+                    <td class="time-col">13:25–13:40</td>
+                    <td>【二進】天降螢光棒</td>
+                    <td>
+                        1. 準備天降螢光棒×14桌<br>
+                        2. 播放歌詞影片<br>
+                        3. 新娘唱歌進場至會場中央<br>
+                        4. 新郎搭升降梯唱 RAP<br>
+                        5. 猜迪士尼歌曲約3首
+                    </td>
+                </tr>
+                <tr class="highlight">
+                    <td class="time-col">13:40–13:55</td>
+                    <td>敬酒</td>
+                    <td>服務部主管領主婚人及新人敬酒<br>管家幫新娘提裙襬<br>輪播新人婚紗影片</td>
+                </tr>
+                <tr>
+                    <td class="time-col">13:55–14:25</td>
+                    <td>新人換裝（二）</td>
+                    <td>換第三套禮服<br>造型時間20-25分鐘</td>
+                </tr>
+                <tr>
+                    <td class="time-col">14:10–14:25</td>
+                    <td>準備三進氣球</td>
+                    <td>準備公主氣球×20<br>引導賓客上前取氣球</td>
+                </tr>
+                <tr>
+                    <td class="time-col">14:25</td>
+                    <td>上末道菜</td>
+                    <td>服務人員上最後一道料理</td>
+                </tr>
+                <tr class="highlight">
+                    <td class="time-col">14:25–14:30</td>
+                    <td>【三進】謝幕</td>
+                    <td>
+                        1. 新郎持氣球×20+新娘一同發送進場後上台<br>
+                        2. 新娘致謝詞<br>
+                        3. 播放謝幕煙火影片<br>
+                        4. 退場，背板前送客
+                    </td>
+                </tr>
+                <tr class="highlight">
+                    <td class="time-col">14:30 後</td>
+                    <td>送客</td>
+                    <td>背板前送客<br>發送貝殼泡芙×150<br>賓客合照</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="info-box" style="margin-top: 30px;">
+            <strong>💡 重點提醒</strong><br>
+            • 三個進場時間點：12:30 一進、13:25 二進、14:25 三進<br>
+            • 兩次換裝：12:55 換第二套、13:55 換第三套<br>
+            • 敬酒時間：13:40–13:55<br>
+            • 爆破氣球 CUE 點：新郎親吻新娘時
+        </div>
+    </div>
+</body>
+</html>

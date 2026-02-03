@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>物品清單表</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 12mm;
+        }
+
+        @media print {
+            body { margin: 0; padding: 10px; font-size: 12px; }
+            .no-print { display: none; }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            th {
+                background: #d4145a !important;
+                color: white !important;
+            }
+            tr:nth-child(even) {
+                background: #f8f9fa !important;
+            }
+            .category-header {
+                background: #e3f2fd !important;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            background: #f5f5f5;
+            font-size: 13px;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 100%;
+        }
+
+        h1 {
+            color: #d4145a;
+            text-align: center;
+            border-bottom: 3px solid #d4145a;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffe8b3 100%);
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .info-box strong {
+            color: #d4145a;
+            font-size: 15px;
+        }
+
+        .category-header {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 12px 16px;
+            margin: 20px 0 12px 0;
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+            font-weight: bold;
+            font-size: 18px;
+            color: #1565c0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+
+        th {
+            background: #d4145a;
+            color: white;
+            padding: 12px 10px;
+            text-align: left;
+            font-weight: bold;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            vertical-align: top;
+            line-height: 1.7;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        tr:hover {
+            background: #ffe8f0;
+        }
+
+        .item-col {
+            width: 25%;
+            font-weight: 500;
+        }
+
+        .quantity-col {
+            width: 15%;
+        }
+
+        .person-col {
+            width: 20%;
+            color: #1565c0;
+            font-weight: 500;
+        }
+
+        .note-col {
+            width: 40%;
+        }
+
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #d4145a;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(212, 20, 90, 0.3);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .btn-print:hover {
+            background: #b0123e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 20, 90, 0.4);
+        }
+
+        .back-to-home {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #d4145a 0%, #ff5a8a 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 16px rgba(212, 20, 90, 0.3);
+            transition: all 0.3s ease;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-to-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 20, 90, 0.4);
+        }
+
+        @media print {
+            .back-to-home { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .back-to-home {
+                bottom: 16px;
+                right: 16px;
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+        }
+
+        .highlight {
+            background: #fff3e0 !important;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-to-home">
+        <span>🏠</span>
+        <span>返回首頁</span>
+    </a>
+    <button class="btn-print no-print" onclick="window.print()">🖨️ 列印 / 存成 PDF</button>
+
+    <div class="container">
+        <h1>📦 物品清單表</h1>
+
+        <div class="info-box">
+            <strong>📌 物品運送說明</strong><br>
+            <strong>擎爸媽</strong>：2/6 晚上載到沐蘭下貨<br>
+            <strong>宣毅</strong>：2/7 早上 9:30 載送到大直典華會場<br>
+            <strong>子擎車上要帶著</strong>：璇媽禮服、璇叔叔西裝、新娘三套西裝、車頭彩頭娃娃、新郎獵裝（第三套）
+        </div>
+
+        <div class="category-header">💐 花類</div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="item-col">物品名稱</th>
+                    <th class="quantity-col">數量</th>
+                    <th class="person-col">負責人</th>
+                    <th class="note-col">用途 / 備註</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="highlight">
+                    <td class="item-col">新娘捧花</td>
+                    <td class="quantity-col">1 束</td>
+                    <td class="person-col">心榆（VaVa）</td>
+                    <td class="note-col">新娘進場用，交手後管家收取</td>
+                </tr>
+                <tr>
+                    <td class="item-col">新郎胸花</td>
+                    <td class="quantity-col">1 朵</td>
+                    <td class="person-col">心榆（VaVa）</td>
+                    <td class="note-col">新郎佩戴</td>
+                </tr>
+                <tr>
+                    <td class="item-col">主婚人胸花</td>
+                    <td class="quantity-col">2 朵</td>
+                    <td class="person-col">心榆（VaVa）</td>
+                    <td class="note-col">新郎父母佩戴</td>
+                </tr>
+                <tr>
+                    <td class="item-col">花瓣</td>
+                    <td class="quantity-col">4 袋（約 400 片）</td>
+                    <td class="person-col">擎媽</td>
+                    <td class="note-col">花童撒花用，裝在花童籃中</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="category-header">🎈 氣球類</div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="item-col">物品名稱</th>
+                    <th class="quantity-col">數量</th>
+                    <th class="person-col">負責人</th>
+                    <th class="note-col">用途 / 備註</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="highlight">
+                    <td class="item-col">爆破氣球</td>
+                    <td class="quantity-col">4 顆</td>
+                    <td class="person-col">佈置廠商</td>
+                    <td class="note-col">一進新郎親吻新娘時爆破，廠商準備於走道兩旁</td>
+                </tr>
+                <tr class="highlight">
+                    <td class="item-col">爸爸氣球</td>
+                    <td class="quantity-col">4 個</td>
+                    <td class="person-col">若棻</td>
+                    <td class="note-col">新娘進場時手臂綁氣球代表爸爸，交手後小幫手收取</td>
+                </tr>
+                <tr class="highlight">
+                    <td class="item-col">公主氣球（三進）</td>
+                    <td class="quantity-col">20 個</td>
+                    <td class="person-col">若棻</td>
+                    <td class="note-col">三進發送給賓客，裝在上慈籃子中</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="category-header">🎆 螢光棒類</div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="item-col">物品名稱</th>
+                    <th class="quantity-col">數量</th>
+                    <th class="person-col">負責人</th>
+                    <th class="note-col">用途 / 備註</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="highlight">
+                    <td class="item-col">螢光棒（主桌）</td>
+                    <td class="quantity-col">1 袋（粗款 10 支）</td>
+                    <td class="person-col">擎媽</td>
+                    <td class="note-col">二進天降用，主桌使用</td>
+                </tr>
+                <tr class="highlight">
+                    <td class="item-col">螢光棒（其他桌）</td>
+                    <td class="quantity-col">14 袋（每袋：粗款 5 支 + 細款 20 支）</td>
+                    <td class="person-col">擎媽</td>
+                    <td class="note-col">二進天降用，共 15 袋（含主桌）</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="category-header">🎁 婚禮小物 / 送客禮</div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="item-col">物品名稱</th>
+                    <th class="quantity-col">數量</th>
+                    <th class="person-col">負責人</th>
+                    <th class="note-col">用途 / 備註</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="highlight">
+                    <td class="item-col">貝殼泡芙</td>
+                    <td class="quantity-col">150 個</td>
+                    <td class="person-col">擎媽</td>
+                    <td class="note-col">送客禮，裝在上慈籃子中發放</td>
+                </tr>
+                <tr>
+                    <td class="item-col">喜餅</td>
+                    <td class="quantity-col">依名單</td>
+                    <td class="person-col">心榆、染墨</td>
+                    <td class="note-col">依喜餅名單發放給指定賓客</td>
+                </tr>
+                <tr>
+                    <td class="item-col">猜歌小禮</td>
+                    <td class="quantity-col">3 份</td>
+                    <td class="person-col">Eunice（典華）</td>
+                    <td class="note-col">紅色太保製餅：晴花酥（洛神蔓越莓）+ 花果茶（雪白公主）+ 黑白鑽咖啡豆（2 入）<br>會寄到現場</td>
+                </tr>
+                <tr>
+                    <td class="item-col">婚禮小物</td>
+                    <td class="quantity-col">依規劃</td>
+                    <td class="person-col">子擎取貨</td>
+                    <td class="note-col">2/6 14:00 賓熙熙取貨，拿到貨交給擎媽</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="category-header">📸 儀式道具</div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="item-col">物品名稱</th>
+                    <th class="quantity-col">數量</th>
+                    <th class="person-col">負責人</th>
+                    <th class="note-col">用途 / 備註</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="item-col">泡泡槍</td>
+                    <td class="quantity-col">1 支（迪士尼造型）</td>
+                    <td class="person-col">擎媽</td>
+                    <td class="note-col">花童進場用，含備用迪士尼棒子</td>
+                </tr>
+                <tr>
+                    <td class="item-col">花童籃</td>
+                    <td class="quantity-col">1 大、1 小（備用）</td>
+                    <td class="person-col">擎媽</td>
+                    <td class="note-col">裝花瓣用</td>
+                </tr>
+                <tr>
+                    <td class="item-col">上慈籃子</td>
+                    <td class="quantity-col">1 個</td>
+                    <td class="person-col">若棻</td>
+                    <td class="note-col">裝三進氣球 / 送客時放泡芙</td>
+                </tr>
+                <tr>
+                    <td class="item-col">採頭娃娃</td>
+                    <td class="quantity-col">1 個</td>
+                    <td class="person-col">Ivy 提供</td>
+                    <td class="note-col">2/4 19:30 Ivy取貨，放在擎車上<br>璇姊錄典華下車畫面（10:00）</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="category-header">🏛️ 佈置 / 展示物品</div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="item-col">物品名稱</th>
+                    <th class="quantity-col">數量</th>
+                    <th class="person-col">負責人</th>
+                    <th class="note-col">用途 / 備註</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="item-col">婚紗相本</td>
+                    <td class="quantity-col">1 本</td>
+                    <td class="person-col">擎媽 → 宣毅載送</td>
+                    <td class="note-col">迎賓桌展示</td>
+                </tr>
+                <tr>
+                    <td class="item-col">無框大畫</td>
+                    <td class="quantity-col">1 幅</td>
+                    <td class="person-col">擎媽 → 宣毅載送</td>
+                    <td class="note-col">會場展示</td>
+                </tr>
+                <tr>
+                    <td class="item-col">謝卡木盒</td>
+                    <td class="quantity-col">1 個</td>
+                    <td class="person-col">擎媽 → 宣毅載送</td>
+                    <td class="note-col">放迎賓桌或交總召</td>
+                </tr>
+                <tr>
+                    <td class="item-col">紙本喜帖</td>
+                    <td class="quantity-col">展示用</td>
+                    <td class="person-col">擎媽 → 宣毅載送</td>
+                    <td class="note-col">展示用</td>
+                </tr>
+                <tr>
+                    <td class="item-col">簽到簿</td>
+                    <td class="quantity-col">1 本（附 3 支筆）</td>
+                    <td class="person-col">擎媽</td>
+                    <td class="note-col">禮金桌使用</td>
+                </tr>
+                <tr>
+                    <td class="item-col">座位表、帶位表</td>
+                    <td class="quantity-col">數份</td>
+                    <td class="person-col">若棻印＆管理</td>
+                    <td class="note-col">招待組使用</td>
+                </tr>
+                <tr>
+                    <td class="item-col">金色燭台</td>
+                    <td class="quantity-col">依規劃</td>
+                    <td class="person-col">若棻</td>
+                    <td class="note-col">佈置物品</td>
+                </tr>
+                <tr>
+                    <td class="item-col">白色野餐佈置</td>
+                    <td class="quantity-col">依規劃</td>
+                    <td class="person-col">若棻</td>
+                    <td class="note-col">佈置物品</td>
+                </tr>
+                <tr>
+                    <td class="item-col">美女與野獸花盅</td>
+                    <td class="quantity-col">1 個</td>
+                    <td class="person-col">擎媽 → 宣毅載送</td>
+                    <td class="note-col">佈置展示</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="category-header">👔 服裝 / 配件</div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="item-col">物品名稱</th>
+                    <th class="quantity-col">數量</th>
+                    <th class="person-col">負責人</th>
+                    <th class="note-col">用途 / 備註</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="item-col">高跟鞋</td>
+                    <td class="quantity-col">1 雙</td>
+                    <td class="person-col">擎媽 → 宣毅載送</td>
+                    <td class="note-col">新娘換穿</td>
+                </tr>
+                <tr>
+                    <td class="item-col">工作人員胸牌</td>
+                    <td class="quantity-col">數個</td>
+                    <td class="person-col">擎媽 → 宣毅載送</td>
+                    <td class="note-col">招待組佩戴</td>
+                </tr>
+                <tr>
+                    <td class="item-col">掛燙機</td>
+                    <td class="quantity-col">1 台</td>
+                    <td class="person-col">子擎帶</td>
+                    <td class="note-col">帶到新娘休息室</td>
+                </tr>
+                <tr>
+                    <td class="item-col">愛心墨鏡</td>
+                    <td class="quantity-col">數個</td>
+                    <td class="person-col">若棻</td>
+                    <td class="note-col">Reels拍攝用</td>
+                </tr>
+                <tr>
+                    <td class="item-col">玻璃鞋</td>
+                    <td class="quantity-col">1 雙</td>
+                    <td class="person-col">佩璇</td>
+                    <td class="note-col">展示或拍攝用</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="category-header">🎯 其他必備</div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="item-col">物品名稱</th>
+                    <th class="quantity-col">數量</th>
+                    <th class="person-col">負責人</th>
+                    <th class="note-col">用途 / 備註</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="item-col">計算機</td>
+                    <td class="quantity-col">1 台</td>
+                    <td class="person-col">擎媽</td>
+                    <td class="note-col">收禮金 / 現場核對金額</td>
+                </tr>
+                <tr>
+                    <td class="item-col">螢光棒、沙袋</td>
+                    <td class="quantity-col">依規劃</td>
+                    <td class="person-col">佩璇</td>
+                    <td class="note-col">佈置固定用</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="info-box" style="margin-top: 30px; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-left-color: #4caf50;">
+            <strong>✅ 典華提供物品</strong><br>
+            • 授禮桌<br>
+            • 相片桌<br>
+            • 相框架<br>
+            • 送客籃<br>
+            • 每桌迎賓喜糖<br>
+            • 紅包袋<br>
+            • 簽名筆<br>
+            • 禮金簿<br>
+            • 代包禮金謝卡
+        </div>
+    </div>
+</body>
+</html>
