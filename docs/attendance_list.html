@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>出席調查表 - 招待帶位查詢</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #d4145a;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Statistics Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(212, 20, 90, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card .icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .stat-card .number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #d4145a;
+        }
+
+        .stat-card .label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* Search and Filter */
+        .search-filter-box {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .search-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 20px;
+            border: 2px solid #f8bbd9;
+            border-radius: 30px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: #d4145a;
+        }
+
+        .filter-btn {
+            padding: 12px 24px;
+            border: 2px solid #d4145a;
+            background: white;
+            color: #d4145a;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #d4145a;
+            color: white;
+        }
+
+        /* Table Container */
+        .table-container {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .table-scroll {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #d4145a 0%, #ff5a8a 100%);
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+
+        th {
+            padding: 16px 12px;
+            text-align: left;
+            font-weight: 600;
+            white-space: nowrap;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        th:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        th .sort-icon {
+            margin-left: 5px;
+            opacity: 0.5;
+        }
+
+        td {
+            padding: 14px 12px;
+            border-bottom: 1px solid #f5f5f5;
+            vertical-align: middle;
+        }
+
+        tr:hover {
+            background: #fff8fa;
+        }
+
+        tr.bride-side {
+            border-left: 4px solid #e91e63;
+        }
+
+        tr.groom-side {
+            border-left: 4px solid #2196f3;
+        }
+
+        /* Tags */
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .tag-bride {
+            background: #fce4ec;
+            color: #c2185b;
+        }
+
+        .tag-groom {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .tag-yes {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .tag-no {
+            background: #fafafa;
+            color: #9e9e9e;
+        }
+
+        .tag-gift {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        /* Attendance count */
+        .attendance-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #d4145a 0%, #ff5a8a 100%);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .attendance-count.zero {
+            background: #e0e0e0;
+            color: #757575;
+        }
+
+        /* Message cell */
+        .message-cell {
+            max-width: 250px;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* Phone link */
+        .phone-link {
+            color: #1565c0;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .phone-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Name cell */
+        .name-cell {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Back to home */
+        .back-to-home {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #d4145a 0%, #ff5a8a 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 16px rgba(212, 20, 90, 0.3);
+            transition: all 0.3s ease;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-to-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 20, 90, 0.4);
+        }
+
+        /* Important reminder box */
+        .reminder-box {
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            border-left: 5px solid #f44336;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            font-size: 15px;
+        }
+
+        .reminder-box strong {
+            color: #c62828;
+        }
+
+        /* No results */
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 16px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 22px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-card .number {
+                font-size: 28px;
+            }
+
+            .search-row {
+                flex-direction: column;
+            }
+
+            .search-input {
+                width: 100%;
+            }
+
+            .filter-btn {
+                width: 100%;
+            }
+
+            table {
+                font-size: 13px;
+            }
+
+            th, td {
+                padding: 10px 8px;
+            }
+
+            .back-to-home {
+                bottom: 16px;
+                right: 16px;
+                padding: 10px 18px;
+                font-size: 13px;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 10px;
+            }
+
+            .back-to-home, .search-filter-box, .reminder-box {
+                display: none;
+            }
+
+            .stat-card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+
+            .table-container {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-to-home">
+        <span>&#127968;</span>
+        <span>返回首頁</span>
+    </a>
+
+    <div class="container">
+        <h1>&#128203; 出席調查表 - 招待帶位查詢</h1>
+
+        <div class="reminder-box">
+            <strong>&#9888;&#65039; 招待帶位組重要提醒：</strong><br>
+            &#8226; <strong>12:30</strong> 注意是否有很多賓客臨時無法出席<br>
+            &#8226; <strong>12:50</strong> 正式出餐前須決定是否撤去預備桌，並<strong>立即告知總召若棻</strong>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="icon">&#128101;</div>
+                <div class="number" id="total-guests">0</div>
+                <div class="label">總出席人數</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">&#128106;</div>
+                <div class="number" id="total-groups">0</div>
+                <div class="label">總組數</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">&#128118;</div>
+                <div class="number" id="child-chairs">0</div>
+                <div class="label">需兒童椅</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">&#127813;</div>
+                <div class="number" id="vegetarian">0</div>
+                <div class="label">需素食</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">&#127856;</div>
+                <div class="number" id="gift-boxes">0</div>
+                <div class="label">需喜餅</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">&#128105;</div>
+                <div class="number" id="bride-side">0</div>
+                <div class="label">女方賓客</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">&#128104;</div>
+                <div class="number" id="groom-side">0</div>
+                <div class="label">男方賓客</div>
+            </div>
+        </div>
+
+        <!-- Search and Filter -->
+        <div class="search-filter-box">
+            <div class="search-row">
+                <input type="text" class="search-input" id="searchInput" placeholder="&#128269; 搜尋姓名或電話...">
+                <button class="filter-btn active" data-filter="all">全部</button>
+                <button class="filter-btn" data-filter="bride">女方</button>
+                <button class="filter-btn" data-filter="groom">男方</button>
+                <button class="filter-btn" data-filter="child">需兒童椅</button>
+                <button class="filter-btn" data-filter="veg">需素食</button>
+                <button class="filter-btn" data-filter="gift">需喜餅</button>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-container">
+            <div class="table-scroll">
+                <table id="attendanceTable">
+                    <thead>
+                        <tr>
+                            <th onclick="sortTable(0)">姓名 <span class="sort-icon">&#8597;</span></th>
+                            <th onclick="sortTable(1)">男/女方 <span class="sort-icon">&#8597;</span></th>
+                            <th onclick="sortTable(2)">電話 <span class="sort-icon">&#8597;</span></th>
+                            <th onclick="sortTable(3)">出席數 <span class="sort-icon">&#8597;</span></th>
+                            <th>兒童椅</th>
+                            <th>素食</th>
+                            <th>喜餅</th>
+                            <th>留言</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Data will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="no-results" id="noResults" style="display: none;">
+                &#128533; 找不到符合條件的賓客
+            </div>
+        </div>
+
+        <div style="margin-top: 40px; padding-top: 20px; border-top: 2px solid rgba(212,20,90,0.2); text-align: center; color: #999; font-size: 13px;">
+            <div style="margin-bottom: 8px;">Made with &#10084;&#65039; for 子擎 & 佩璇's Special Day</div>
+        </div>
+    </div>
+
+    <script>
+        // Attendee data
+        const attendees = [
+            {"gift_box_need":1,"name":"沈麗芬","side":"Bride","phone":"0909021951","attendance_count":4,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"（2個兒子➕姑丈）要長長久久 一定要幸福"},
+            {"gift_box_need":1,"name":"王麗晴","side":"Bride","phone":"0976658979","attendance_count":2,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"恭喜"},
+            {"gift_box_need":1,"name":"詹文正","side":"Bride","phone":"0910101030","attendance_count":2,"need_child_chair":false,"need_vegetarian_meal":false,"message_to_couple":"2人（與太太）"},
+            {"gift_box_need":1,"name":"鍾芳如","side":"Bride","phone":"0905767600","attendance_count":2,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"一定要幸福快樂～"},
+            {"gift_box_need":null,"name":"李冀","side":"Groom","phone":"0919131907","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"大學到現在看到子擎的變化，從跑山隨性拉風男變成持家輕熟帥哥，能見證人生大事備感榮幸"},
+            {"gift_box_need":null,"name":"劉有容","side":"Groom","phone":"0911703840","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"子擎好帥"},
+            {"gift_box_need":1,"name":"江上慈","side":"Bride","phone":"0955715027","attendance_count":2,"need_child_chair":false,"need_vegetarian_meal":null,"message_to_couple":"公主王子要從童話中走出來到現實生活啦！非常非常恭喜你們"},
+            {"gift_box_need":null,"name":"曾紹章","side":"Groom","phone":"0925275925","attendance_count":1,"need_child_chair":false,"need_vegetarian_meal":false,"message_to_couple":"天作之合，一定會幸福一輩子的~"},
+            {"gift_box_need":null,"name":"詹育嘉","side":"Bride","phone":"0937860498","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"太替你開心了！祝你們幸福快樂、甜甜蜜蜜一輩子"},
+            {"gift_box_need":null,"name":"周承毅","side":"Groom","phone":"0937197657","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"兄弟 祝幸福美滿"},
+            {"gift_box_need":null,"name":"林筱潔","side":"Bride","phone":"0936455423","attendance_count":3,"need_child_chair":false,"need_vegetarian_meal":false,"message_to_couple":"平安健康順心幸福一輩子"},
+            {"gift_box_need":null,"name":"林孟潔","side":"Groom","phone":"0936218026","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"永浴愛河"},
+            {"gift_box_need":1,"name":"陳玉芳","side":"Bride","phone":"0937551576","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"永浴愛河白首偕老"},
+            {"gift_box_need":1,"name":"葉日凱","side":"Bride","phone":"0937938676","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"白頭偕老，永浴愛河"},
+            {"gift_box_need":null,"name":"陳健元","side":"Groom","phone":"0953851928","attendance_count":2,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"全馬了"},
+            {"gift_box_need":1,"name":"Tako","side":"Bride","phone":"0936138995","attendance_count":2,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"多生幾個娃 台灣缺人口"},
+            {"gift_box_need":null,"name":"鍾佩妏","side":"Groom","phone":"0975222920","attendance_count":2,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"早生貴子~我要當乾媽~~~"},
+            {"gift_box_need":null,"name":"梁義偉","side":"Groom","phone":"0939677510","attendance_count":1,"need_child_chair":false,"need_vegetarian_meal":null,"message_to_couple":"百年好合, 永浴愛河"},
+            {"gift_box_need":null,"name":"汪顯欽","side":"Groom","phone":"0928206913","attendance_count":2,"need_child_chair":false,"need_vegetarian_meal":null,"message_to_couple":"百年好合，永結同心，早生貴子，富貴綿長～～"},
+            {"gift_box_need":1,"name":"魏雨禪","side":"Bride","phone":"0966097242","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"謝謝邀請，恭喜你們"},
+            {"gift_box_need":null,"name":"鍾佩璇","side":"Bride","phone":"0983153122","attendance_count":3,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"我的媽媽、外婆和叔叔"},
+            {"gift_box_need":null,"name":"林政傑 羅奕鈞","side":"Groom","phone":"0939077156","attendance_count":2,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"我愛你楊董"},
+            {"gift_box_need":null,"name":"郭泓毅 Owen","side":"Groom","phone":"0928842178","attendance_count":1,"need_child_chair":false,"need_vegetarian_meal":null,"message_to_couple":"我Jerry兄弟結婚了！恭喜！工作上辛苦了，咱們一起加油！"},
+            {"gift_box_need":null,"name":"楊子擎","side":"Groom","phone":"0966765256","attendance_count":2,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"幸福"},
+            {"gift_box_need":null,"name":"顏勤智","side":"Groom","phone":"0905614965","attendance_count":2,"need_child_chair":false,"need_vegetarian_meal":null,"message_to_couple":"非常祝賀新郎新娘成立小家庭！郎才女貌～"},
+            {"gift_box_need":1,"name":"劉彥宏 (阿克)","side":"Bride","phone":"0966707089","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"很開心可以一起見證你們的幸福~也讓我沾沾喜氣~"},
+            {"gift_box_need":0,"name":"Zoe劉盈榛","side":"Bride","phone":"0955899027","attendance_count":0,"need_child_chair":false,"need_vegetarian_meal":null,"message_to_couple":"看你幸福 好開心"},
+            {"gift_box_need":1,"name":"柯宗妤","side":"Bride","phone":"0952815967","attendance_count":3,"need_child_chair":false,"need_vegetarian_meal":false,"message_to_couple":"看你們修成正果！好替你們開心啊！要幸福一輩子喔"},
+            {"gift_box_need":null,"name":"陳建志","side":"Groom","phone":"0978358939","attendance_count":2,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"恭喜！"},
+            {"gift_box_need":1,"name":"唐李雯","side":"Bride","phone":"0978752783","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"恭喜！要一直幸福下去喔"},
+            {"gift_box_need":null,"name":"陳彥呈","side":"Groom","phone":"0988215775","attendance_count":1,"need_child_chair":false,"need_vegetarian_meal":null,"message_to_couple":"恭喜！恭喜"},
+            {"gift_box_need":null,"name":"馬彥合","side":"Groom","phone":"0912465185","attendance_count":1,"need_child_chair":false,"need_vegetarian_meal":false,"message_to_couple":"恭喜！祝百年好合～"},
+            {"gift_box_need":null,"name":"林誠威","side":"Groom","phone":"0987698645","attendance_count":1,"need_child_chair":false,"need_vegetarian_meal":false,"message_to_couple":"恭喜～祝永遠幸福"},
+            {"gift_box_need":null,"name":"楊子琳","side":"Groom","phone":"0919947666","attendance_count":3,"need_child_chair":true,"need_vegetarian_meal":false,"message_to_couple":"恭喜～終於等到這天 我們期待參加婚禮！"},
+            {"gift_box_need":1,"name":"王昭勻","side":"Bride","phone":"0939562299","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"恭喜 祝：永浴愛河"},
+            {"gift_box_need":1,"name":"楊嘉玉","side":"Bride","phone":"0981521348","attendance_count":4,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"恭喜（小阿姨一家+二舅）"},
+            {"gift_box_need":null,"name":"張祐銘( Mark Chang )","side":"Groom","phone":"0911301966","attendance_count":1,"need_child_chair":false,"need_vegetarian_meal":false,"message_to_couple":"恭喜大大~~ 要幸福的長長久久喔!"},
+            {"gift_box_need":null,"name":"彭擁明","side":"Groom","phone":"0979685100","attendance_count":2,"need_child_chair":false,"need_vegetarian_meal":false,"message_to_couple":"恭喜子擎 Bro!!! 太讚了！"},
+            {"gift_box_need":null,"name":"孫嘉妤","side":"Groom","phone":"0972295337","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"恭喜子擎！祝你們幸福"},
+            {"gift_box_need":null,"name":"陳冠宇","side":"Groom","phone":"0929029090","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"恭喜子擎&佩璇！從你們相處就感覺得出來彼此都很用心在經營感情和生活，能看你們繼續走下去實在非常開心祝福！期待婚禮！"},
+            {"gift_box_need":1,"name":"游季瑾","side":"Bride","phone":"0978021712","attendance_count":2,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"恭喜你"},
+            {"gift_box_need":1,"name":"賴品榛","side":"Bride","phone":"0933882188","attendance_count":2,"need_child_chair":false,"need_vegetarian_meal":false,"message_to_couple":"恭喜你們 祝百年好合"},
+            {"gift_box_need":null,"name":"阮立凱","side":"Groom","phone":"0970470403","attendance_count":2,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"恭喜你們找到靈魂的另一半，快樂幸福一輩子！"},
+            {"gift_box_need":1,"name":"柯建宏","side":"Bride","phone":"0986203600","attendance_count":3,"need_child_chair":true,"need_vegetarian_meal":null,"message_to_couple":"恭喜你們解鎖~邁向人生另一個階段，願未來大家都能事事順利圓滿"},
+            {"gift_box_need":1,"name":"王映喬","side":"Bride","phone":"0975785670","attendance_count":1,"need_child_chair":false,"need_vegetarian_meal":true,"message_to_couple":"恭喜佩璇子擎賢伉儷"},
+            {"gift_box_need":1,"name":"柯姵安","side":"Bride","phone":"0988261830","attendance_count":1,"need_child_chair":false,"need_vegetarian_meal":false,"message_to_couple":"恭喜佩璇找到可以共度一生的伴！誠摯祝福你們！"},
+            {"gift_box_need":1,"name":"駱菲莉","side":"Bride","phone":"0936821304","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"恭喜佩璇與子擎共組家庭，邁向人生新的里程。祝福佩璇與子擎白首偕老，琴瑟和鳴，平安健康，幸福美滿!"},
+            {"gift_box_need":1,"name":"邱宜達","side":"Bride","phone":"0930579032","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"恭喜修成正果，祝福白頭偕老！"},
+            {"gift_box_need":1,"name":"沈寶春","side":"Bride","phone":"0921612729","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"恭喜恭喜"},
+            {"gift_box_need":null,"name":"李應晴","side":"Groom","phone":"0963009663","attendance_count":1,"need_child_chair":false,"need_vegetarian_meal":false,"message_to_couple":"恭喜恭喜!"},
+            {"gift_box_need":null,"name":"蔡家宏","side":"Groom","phone":"0972193354","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"恭喜恭喜~!!"},
+            {"gift_box_need":null,"name":"陳黛鈺","side":"Bride","phone":"0935719203","attendance_count":0,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"恭喜您們 幸福滿滿"},
+            {"gift_box_need":1,"name":"彭秀雲","side":"Bride","phone":"0922847270","attendance_count":4,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"祝才子佳人幸福美滿！"},
+            {"gift_box_need":1,"name":"游佳蓉","side":"Bride","phone":"0983770582","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"祝永結同心、白頭偕老"},
+            {"gift_box_need":1,"name":"張庭瑜","side":"Bride","phone":"0975536176","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"祝新婚快樂！永遠幸福美滿"},
+            {"gift_box_need":null,"name":"劉昕宜","side":"Groom","phone":"0952068465","attendance_count":2,"need_child_chair":false,"need_vegetarian_meal":false,"message_to_couple":"婚禮非常可愛～～也非常期待唷！祝福你們幸福快快樂樂"},
+            {"gift_box_need":1,"name":"趙若棻","side":"Bride","phone":"0989732650","attendance_count":2,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"從青春到白紗，我會永遠在妳身邊見證妳幸福的每一刻"},
+            {"gift_box_need":1,"name":"劉良輝（阿輝）","side":"Bride","phone":"0955213882","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"最美最給力營養師恭喜妳！"},
+            {"gift_box_need":1,"name":"廖延苓","side":"Bride","phone":"0983504117","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"賀水水營養師成為人妻拉 祝事業家庭都美滿！"},
+            {"gift_box_need":1,"name":"蔡如萍（婚紗阿姨）","side":"Bride","phone":"0937732927","attendance_count":2,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"超期待參加佩璇的婚禮"},
+            {"gift_box_need":1,"name":"林小波","side":"Bride","phone":"0921280857","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"越南旅遊時說的結婚發言！兌現了！恭喜"},
+            {"gift_box_need":1,"name":"沈柏霖","side":"Bride","phone":"0981865658","attendance_count":6,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"新婚快樂 沈家第一位"},
+            {"gift_box_need":1,"name":"楊宜修","side":"Bride","phone":"0937980185","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"新婚快樂，幸福滿溢"},
+            {"gift_box_need":1,"name":"郭哲遠","side":"Bride","phone":"0953110794","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"新婚快樂"},
+            {"gift_box_need":1,"name":"黃爵豐","side":"Bride","phone":"0987828795","attendance_count":2,"need_child_chair":true,"need_vegetarian_meal":null,"message_to_couple":"新婚快樂讚讚"},
+            {"gift_box_need":1,"name":"黃明慈 MingCi","side":"Bride","phone":"0924056161","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"親愛的佩璇~在跟我同齡的朋友圈中結婚的不多 上次跟你們一起去宜蘭住小木屋真的是很棒的回憶! 也很開心可以榮幸參與你的人生新階段，對我來說真的是莫大的感動，希望你永遠幸福開心"},
+            {"gift_box_need":1,"name":"李劭潁","side":"Bride","phone":"0988952909","attendance_count":0,"need_child_chair":false,"need_vegetarian_meal":false,"message_to_couple":"親愛的佩璇～恭喜你們結婚了，看你一路以來在工作及感情上的努力，覺得很替你開心修成正果，祝福你們健康平安幸福"},
+            {"gift_box_need":null,"name":"賴柏宏","side":"Groom","phone":"0970787663","attendance_count":2,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"願你們在彼此的眼中，看見最真摯的依靠；願你們在人生的旅途中，寫下屬於兩人的詩篇。婚姻不是終點，而是愛的新開始——願這段旅程充滿光與笑，在平凡的日子裡，開出永恆的花。"},
+            {"gift_box_need":null,"name":"林姿芳","side":"Bride","phone":"0916122805","attendance_count":0,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"願你們的婚姻生活充滿陽光，彼此互相扶持，共同創造美好未來"},
+            {"gift_box_need":null,"name":"連慶","side":"Groom","phone":"0988934895","attendance_count":2,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"願你們的愛情像量子糾纏——無論相隔多遠,心永遠同步共振"},
+            {"gift_box_need":1,"name":"陳羿廷","side":"Bride","phone":null,"attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"攜伴一位，不過目前無法確定"},
+            {"gift_box_need":null,"name":"Arbind","side":"Groom","phone":"0905014075","attendance_count":2,"need_child_chair":true,"need_vegetarian_meal":true,"message_to_couple":"Congratulations both you. I am really happy that you found each other and wishes you all the happiness, fortune and good health in the world."},
+            {"gift_box_need":1,"name":"畢惠珊","side":"Bride","phone":null,"attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":""},
+            {"gift_box_need":null,"name":"葉子","side":"Groom","phone":"0915560304","attendance_count":2,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":""},
+            {"gift_box_need":null,"name":"楊依凡","side":"Groom","phone":"0930820423","attendance_count":4,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":""},
+            {"gift_box_need":null,"name":"黃建翔","side":"Groom","phone":"0988652779","attendance_count":2,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":""},
+            {"gift_box_need":1,"name":"龍紹萍","side":"Bride","phone":"0928354106","attendance_count":2,"need_child_chair":false,"need_vegetarian_meal":false,"message_to_couple":""},
+            {"gift_box_need":1,"name":"鍾惠娟","side":"Bride","phone":"0921967811","attendance_count":2,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":""},
+            {"gift_box_need":1,"name":"柯明辰","side":"Bride","phone":"0903295967","attendance_count":2,"need_child_chair":false,"need_vegetarian_meal":false,"message_to_couple":""},
+            {"gift_box_need":1,"name":"呂佩臻","side":"Bride","phone":"0985136349","attendance_count":2,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":""},
+            {"gift_box_need":1,"name":"林秀琴","side":"Bride","phone":"0919265752","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":""},
+            {"gift_box_need":1,"name":"彭昀恆Jimmy","side":"Bride","phone":"0928266315","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":""},
+            {"gift_box_need":null,"name":"杜威德","side":"Groom","phone":"0970152398","attendance_count":2,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":""},
+            {"gift_box_need":null,"name":"陳志勝","side":"Groom","phone":"0912838905","attendance_count":1,"need_child_chair":false,"need_vegetarian_meal":false,"message_to_couple":""},
+            {"gift_box_need":null,"name":"葉瑞鴛","side":"Groom","phone":"0918925976","attendance_count":3,"need_child_chair":true,"need_vegetarian_meal":false,"message_to_couple":""},
+            {"gift_box_need":null,"name":"葉瑞霞","side":"Groom","phone":"0932927249","attendance_count":2,"need_child_chair":false,"need_vegetarian_meal":false,"message_to_couple":""},
+            {"gift_box_need":null,"name":"黃敏琳","side":"Groom","phone":"0932927249","attendance_count":1,"need_child_chair":false,"need_vegetarian_meal":false,"message_to_couple":""},
+            {"gift_box_need":null,"name":"劉芳洲 Baly","side":"Bride","phone":"0988036883","attendance_count":0,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":""},
+            {"gift_box_need":null,"name":"姜佳利","side":"Bride","phone":"0922771662","attendance_count":2,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":""},
+            {"gift_box_need":null,"name":"蔡佳頴","side":"Bride","phone":"0927605600","attendance_count":4,"need_child_chair":true,"need_vegetarian_meal":null,"message_to_couple":""},
+            {"gift_box_need":1,"name":"佩璇的大姨婆(鍾惠美)","side":"Bride","phone":"09831531222","attendance_count":2,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":""},
+            {"gift_box_need":1,"name":"徐偉方(青菜）","side":"Bride","phone":"0933014831","attendance_count":1,"need_child_chair":null,"need_vegetarian_meal":null,"message_to_couple":"1人"}
+        ];
+
+        let currentFilter = 'all';
+        let currentSort = { column: -1, asc: true };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStats();
+            renderTable(attendees);
+            setupEventListeners();
+        });
+
+        function updateStats() {
+            const attending = attendees.filter(a => a.attendance_count > 0);
+            const totalGuests = attending.reduce((sum, a) => sum + a.attendance_count, 0);
+            const childChairs = attendees.filter(a => a.need_child_chair === true).length;
+            const vegetarian = attendees.filter(a => a.need_vegetarian_meal === true).length;
+            const giftBoxes = attendees.filter(a => a.gift_box_need === 1).length;
+            const brideSide = attending.filter(a => a.side === 'Bride').reduce((sum, a) => sum + a.attendance_count, 0);
+            const groomSide = attending.filter(a => a.side === 'Groom').reduce((sum, a) => sum + a.attendance_count, 0);
+
+            document.getElementById('total-guests').textContent = totalGuests;
+            document.getElementById('total-groups').textContent = attending.length;
+            document.getElementById('child-chairs').textContent = childChairs;
+            document.getElementById('vegetarian').textContent = vegetarian;
+            document.getElementById('gift-boxes').textContent = giftBoxes;
+            document.getElementById('bride-side').textContent = brideSide;
+            document.getElementById('groom-side').textContent = groomSide;
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('tableBody');
+            const noResults = document.getElementById('noResults');
+
+            if (data.length === 0) {
+                tbody.innerHTML = '';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            noResults.style.display = 'none';
+            tbody.innerHTML = data.map(a => {
+                const sideClass = a.side === 'Bride' ? 'bride-side' : 'groom-side';
+                const sideTag = a.side === 'Bride'
+                    ? '<span class="tag tag-bride">女方</span>'
+                    : '<span class="tag tag-groom">男方</span>';
+
+                const countClass = a.attendance_count === 0 ? 'zero' : '';
+
+                const childChair = a.need_child_chair === true
+                    ? '<span class="tag tag-yes">需要</span>'
+                    : (a.need_child_chair === false ? '<span class="tag tag-no">不需</span>' : '-');
+
+                const vegetarian = a.need_vegetarian_meal === true
+                    ? '<span class="tag tag-yes">需要</span>'
+                    : (a.need_vegetarian_meal === false ? '<span class="tag tag-no">不需</span>' : '-');
+
+                const giftBox = a.gift_box_need === 1
+                    ? '<span class="tag tag-gift">需要</span>'
+                    : (a.gift_box_need === 0 ? '<span class="tag tag-no">不需</span>' : '-');
+
+                const phone = a.phone
+                    ? `<a href="tel:${a.phone}" class="phone-link">${a.phone}</a>`
+                    : '-';
+
+                const message = a.message_to_couple || '-';
+
+                return `
+                    <tr class="${sideClass}">
+                        <td class="name-cell">${a.name}</td>
+                        <td>${sideTag}</td>
+                        <td>${phone}</td>
+                        <td><span class="attendance-count ${countClass}">${a.attendance_count}</span></td>
+                        <td>${childChair}</td>
+                        <td>${vegetarian}</td>
+                        <td>${giftBox}</td>
+                        <td class="message-cell">${message}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function setupEventListeners() {
+            // Search
+            document.getElementById('searchInput').addEventListener('input', filterAndRender);
+
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.filter;
+                    filterAndRender();
+                });
+            });
+        }
+
+        function filterAndRender() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            let filtered = attendees.filter(a => {
+                // Search filter
+                const matchesSearch = a.name.toLowerCase().includes(searchTerm) ||
+                    (a.phone && a.phone.includes(searchTerm));
+
+                if (!matchesSearch) return false;
+
+                // Category filter
+                switch (currentFilter) {
+                    case 'bride': return a.side === 'Bride';
+                    case 'groom': return a.side === 'Groom';
+                    case 'child': return a.need_child_chair === true;
+                    case 'veg': return a.need_vegetarian_meal === true;
+                    case 'gift': return a.gift_box_need === 1;
+                    default: return true;
+                }
+            });
+
+            // Apply sort if active
+            if (currentSort.column >= 0) {
+                filtered = sortData(filtered, currentSort.column, currentSort.asc);
+            }
+
+            renderTable(filtered);
+        }
+
+        function sortTable(columnIndex) {
+            if (currentSort.column === columnIndex) {
+                currentSort.asc = !currentSort.asc;
+            } else {
+                currentSort.column = columnIndex;
+                currentSort.asc = true;
+            }
+            filterAndRender();
+        }
+
+        function sortData(data, columnIndex, asc) {
+            const sorted = [...data].sort((a, b) => {
+                let valA, valB;
+                switch (columnIndex) {
+                    case 0: valA = a.name; valB = b.name; break;
+                    case 1: valA = a.side; valB = b.side; break;
+                    case 2: valA = a.phone || ''; valB = b.phone || ''; break;
+                    case 3: valA = a.attendance_count; valB = b.attendance_count; break;
+                    default: return 0;
+                }
+
+                if (typeof valA === 'number') {
+                    return asc ? valA - valB : valB - valA;
+                }
+                return asc ? valA.localeCompare(valB) : valB.localeCompare(valA);
+            });
+            return sorted;
+        }
+    </script>
+</body>
+</html>
