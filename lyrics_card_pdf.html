@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>歌詞小卡</title>
+    <style>
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            .no-print {
+                display: none;
+            }
+            .card {
+                page-break-after: always;
+                box-shadow: none !important;
+            }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .card {
+            background: white;
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin: 20px 0;
+        }
+        
+        .title {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .lyrics {
+            line-height: 1.8;
+            color: #333;
+            font-size: 15px;
+        }
+        
+        .lyrics p {
+            margin-bottom: 12px;
+        }
+        
+        .highlight {
+            color: #764ba2;
+            font-weight: 600;
+        }
+        
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .print-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .print-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        
+        .print-btn:active {
+            transform: translateY(0);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="title">♪ 歌詞卡片 ♪</div>
+        <div class="lyrics">
+            <p>習慣親吻你額頭 習慣了牽著手<br>習慣了互相依靠 月光下慢慢走</p>
+            
+            <p>有你的日子之後 我不再出去喝酒<br>我學會珍惜感情 學會感恩這所有</p>
+            
+            <p>春天公園的小路看著櫻花散步回家<br>夏日清涼的午夜試著幫你吹乾頭髮<br>冬天你泡著熱茶 我陪你窩在沙發<br>相濡以沫成了彼此生命中的牽掛</p>
+            
+            <p><span class="highlight">何德何能</span> 我能擁有如此溫柔的女人<br>在最低沉的時候陪伴我讓我再啟程<br>用你最好的青春安慰我躁鬱的靈魂<br>一顆心漸漸地安穩因為你一次次包容</p>
+            
+            <p><span class="highlight">oh my babe 對你說聲感謝</span><br>有了你 這世界從此不再凜冽<br>答應你 我一定愛得更加熱切<br>愛到底 就算整個宇宙毀滅</p>
+        </div>
+        <div class="footer">❤️</div>
+    </div>
+    
+    <div class="button-container no-print">
+        <button class="print-btn" onclick="window.print()">🖨️ 列印小卡</button>
+    </div>
+</body>
+</html>

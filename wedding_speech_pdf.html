@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新郎致詞</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 1.5cm;
+        }
+        
+        body {
+            font-family: 'Microsoft JhengHei', 'STHeiti', sans-serif;
+            line-height: 1.4;
+            color: #2c3e50;
+            max-width: 21cm;
+            margin: 0 auto;
+            padding: 1cm;
+            background: white;
+            font-size: 12px;
+        }
+        
+        .container {
+            column-count: 2;
+            column-gap: 1.5cm;
+            column-rule: 1px solid #ecf0f1;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #c9896b;
+            font-size: 20px;
+            margin-bottom: 5px;
+            border-bottom: 3px solid #c9896b;
+            padding-bottom: 8px;
+            column-span: all;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 11px;
+            margin-bottom: 15px;
+            column-span: all;
+        }
+        
+        .section {
+            margin-bottom: 15px;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+        
+        .section-number {
+            display: inline-block;
+            background: #c9896b;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+            color-adjust: exact;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            color: #34495e;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .content {
+            font-size: 12px;
+            line-height: 1.6;
+            color: #2c3e50;
+            padding-left: 8px;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 500;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+            color-adjust: exact;
+        }
+        
+        .key-point {
+            margin: 6px 0;
+            padding-left: 12px;
+            border-left: 3px solid #c9896b;
+            font-weight: 500;
+        }
+        
+        .divider {
+            border: 0;
+            height: 1px;
+            background: #c9896b;
+            margin: 10px 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+            color-adjust: exact;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 2px solid #ecf0f1;
+            color: #7f8c8d;
+            font-size: 11px;
+            column-span: all;
+        }
+        
+        .emoji {
+            font-size: 20px;
+            margin-right: 5px;
+        }
+        
+        @media print {
+            body {
+                padding: 0;
+            }
+            
+            .no-print {
+                display: none;
+            }
+        }
+        
+        button {
+            display: block;
+            margin: 15px auto;
+            padding: 10px 25px;
+            background: #c9896b;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            column-span: all;
+        }
+        
+        button:hover {
+            background: #b37a5e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+    <h1>🎤 新郎致詞</h1>
+    <div class="subtitle">舞台口袋版 · 好記版</div>
+    
+    <button class="no-print" onclick="window.print()">📥 點我下載 PDF</button>
+    
+    <div class="no-print" style="text-align: center; margin: 15px 0; padding: 12px; background: #fff3cd; border-radius: 10px; font-size: 12px;">
+        💡 <strong>下載步驟：</strong> 點按鈕 → 目的地選「另存為PDF」→ 記得勾選「背景圖形」→ 儲存
+    </div>
+    
+    <div class="container">
+    
+    <div class="section">
+        <div class="section-number">① 開場問候</div>
+        <div class="content">
+            各位至親好友、長官、同事，還有小朋友們，<span class="highlight">大家午安</span>。<br>
+            謝謝大家過年前這麼忙，還特地來參加我們的午宴，<br>
+            見證我們人生很重要的一刻。
+        </div>
+    </div>
+    
+    <hr class="divider">
+    
+    <div class="section">
+        <div class="section-number">② 感謝父母</div>
+        <div class="content">
+            首先，我想感謝我的父母。<br>
+            謝謝爸爸媽媽一路以來的照顧與支持，<br>
+            讓我可以順利走到今天。<br><br>
+            
+            <div class="key-point">
+                你們教會我：<br>
+                <span class="highlight">同心、負責、互相成全</span><br>
+                我也會把這份價值帶進自己的家庭。
+            </div>
+        </div>
+    </div>
+    
+    <hr class="divider">
+    
+    <div class="section">
+        <div class="section-number">③ 感謝岳母與佩璇家人</div>
+        <div class="content">
+            我也想特別謝謝<span class="highlight">佩璇的媽媽</span>，以及佩璇的家人。<br>
+            剛剛進場那一幕，媽媽牽著佩璇走向我，<br>
+            我真的非常感動。<br><br>
+            
+            因為我知道，她帶著家人的愛與祝福走向我。
+        </div>
+    </div>
+    
+    <hr class="divider">
+    
+    <div class="section">
+        <div class="section-number">④ 對佩璇說</div>
+        <div class="content">
+            最後，我想對佩璇說：<br><br>
+            
+            謝謝你包容我有時候的不成熟。<br>
+            這幾個月籌備婚禮，我學到最重要的技能：<br>
+            <span class="highlight">老婆說的話永遠是對的</span>（笑）<br><br>
+            
+            謝謝你選擇我，願意和我一起走進婚姻。<br><br>
+            
+            <div class="key-point">
+                未來我不敢說我最完美，<br>
+                但我會是一個<span class="highlight">願意溝通、願意改變、一直把你放在心上的人</span>。<br>
+                期許我們攜手面對往後餘生。
+            </div>
+        </div>
+    </div>
+    
+    <hr class="divider">
+    
+    <div class="section">
+        <div class="section-number">⑤ 再次感謝大家</div>
+        <div class="content">
+            再次謝謝今天到場的每一位親友。<br>
+            你們的祝福不是形式，而是最真實的支持。<br><br>
+            
+            今天也請大家吃好、喝好、聊得開心，<br>
+            等等也歡迎多跟我們拍照留念。
+        </div>
+    </div>
+    
+    <hr class="divider">
+    
+    <div class="section">
+        <div class="section-number">⑥ 小提醒 + 幽默結尾</div>
+        <div class="content">
+            調酒區有<span class="highlight">四種口味雞尾酒</span>，<br>
+            大家可以去調一杯專屬特調，放鬆一下。<br><br>
+            
+            如果等一下覺得菜沒有特別好吃，<br>
+            也不要怪餐廳，因為<span class="highlight">錢都拿去娶老婆了</span>（笑）<br>
+            不過我們就好好灌爆他的紅酒就好！
+        </div>
+    </div>
+    
+    <hr class="divider">
+    
+    <div class="section">
+        <div class="section-number">🎉 結尾</div>
+        <div class="content" style="text-align: center; font-size: 18px; font-weight: bold;">
+            祝大家吃得開心、喝得盡興。<br>
+            <span style="color: #c9896b;">謝謝大家！</span>
+        </div>
+    </div>
+    
+    <div class="footer">
+        💝 祝福滿滿的一天 💝
+    </div>
+    </div>
+</body>
+</html>

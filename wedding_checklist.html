@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>婚禮工作分配清單</title>
+    <style>
+        @page {
+            size: A3;
+            margin: 15mm;
+        }
+        
+        @media print {
+            body { margin: 0; padding: 10px; font-size: 11px; }
+            .no-print { display: none; }
+            .page-break { page-break-before: always; }
+            .container { padding: 15px; box-shadow: none; }
+            h1 { font-size: 24px; margin-bottom: 10px; padding-bottom: 8px; }
+            h2 { font-size: 16px; margin-top: 15px; margin-bottom: 8px; }
+            h3 { font-size: 13px; margin-top: 10px; margin-bottom: 5px; }
+            .two-column { column-count: 2; column-gap: 20px; }
+            .time-section { padding: 8px; margin: 8px 0; }
+            .highlight, .warning { padding: 8px; margin: 8px 0; }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif;
+            line-height: 1.4;
+            padding: 20px;
+            max-width: 100%;
+            margin: 0 auto;
+            background: #f5f5f5;
+            font-size: 12px;
+        }
+        
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #d4145a;
+            border-bottom: 3px solid #d4145a;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+        
+        h2 {
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            padding-left: 10px;
+            border-left: 4px solid #d4145a;
+            font-size: 18px;
+        }
+        
+        h3 {
+            color: #555;
+            margin-top: 12px;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 8px;
+            border-left: 3px solid #ffc107;
+            margin: 10px 0;
+            border-radius: 3px;
+        }
+        
+        .highlight strong {
+            color: #d4145a;
+            font-size: 14px;
+        }
+        
+        ul {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+        
+        li {
+            margin: 3px 0;
+            line-height: 1.5;
+        }
+        
+        .warning {
+            background: #ffe8e8;
+            padding: 8px;
+            border-left: 3px solid #dc3545;
+            margin: 10px 0;
+            border-radius: 3px;
+            font-size: 11px;
+        }
+        
+        .checkbox-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .checkbox-list li {
+            padding: 3px 0;
+            padding-left: 18px;
+            position: relative;
+        }
+        
+        .checkbox-list li:before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+            color: #d4145a;
+        }
+        
+        .time-section {
+            background: #f8f9fa;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border-left: 3px solid #d4145a;
+            break-inside: avoid;
+        }
+        
+        .time-section h3 {
+            color: #d4145a;
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+        
+        .two-column {
+            column-count: 2;
+            column-gap: 25px;
+        }
+        
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #d4145a;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(212, 20, 90, 0.3);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        .btn-print:hover {
+            background: #b0123e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 20, 90, 0.4);
+        }
+        
+        .section-divider {
+            border-top: 1px dashed #ddd;
+            margin: 15px 0;
+        }
+        
+        .compact-section {
+            margin: 10px 0;
+        }
+        
+        strong {
+            color: #d4145a;
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-print no-print" onclick="window.print()">🖨️ 列印 / 存成 PDF</button>
+    
+    <div class="container">
+        <h1>👑 婚禮工作分配清單</h1>
+        
+        <div class="highlight">
+            <strong>📌 總召／控場窗口：若棻</strong> ➡️ 當天任何問題第一時間找若棻協調
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="two-column">
+            <div class="compact-section">
+                <h2>🎤 典華＆團隊</h2>
+                <ul>
+                    <li><strong>主持人</strong>：典華</li>
+                    <li><strong>小管家</strong>：典華</li>
+                    <li><strong>新秘</strong>：嫚嫚（助理 2 位）</li>
+                    <li><strong>攝影</strong>：小王子奕丞（2 位）</li>
+                </ul>
+            </div>
+
+            <div class="compact-section">
+                <h2>🤵👰 伴郎伴娘＆花童</h2>
+                <ul>
+                    <li><strong>伴郎</strong>：宣毅、立凱</li>
+                    <li><strong>伴娘</strong>：惠姍、昭勻</li>
+                    <li><strong>花童</strong>：品澄、品希</li>
+                </ul>
+            </div>
+
+            <div class="compact-section">
+                <h2>✍ 誓詞提問分工</h2>
+                <ul>
+                    <li><strong>問新郎誓詞</strong>：若棻、麗晴</li>
+                    <li><strong>問新娘誓詞</strong>：Arbind、建翔</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <h2>🧾 招待組分工（收禮／帶位）</h2>
+        
+        <div class="two-column">
+            <div>
+                <h3>10:00–11:00 禮金人員＆招待</h3>
+                <ul>
+                    <li><strong>禮金</strong>：心榆（記帳點紅包）、染墨（發喜餅輔助）</li>
+                    <li><strong>招待帶位</strong>：奕翔、芳如、伴娘×2</li>
+                </ul>
+                <p><strong>任務</strong>：布置禮金桌、迎賓桌、掛螢光棒、熟悉場地、對流程</p>
+                
+                <div class="warning">
+                    ⚠️ 招待請引導賓客去喝酒🍻 至少消耗 <strong>100 杯</strong>🙏
+                </div>
+            </div>
+
+            <div>
+                <h3>男方招待組</h3>
+                <ul>
+                    <li><strong>男方收禮金</strong>：10:30 到</li>
+                    <li><strong>男方帶位</strong>：小潘（11:30 到）</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <h2>🎁 物品清單</h2>
+        
+        <div class="two-column">
+            <div>
+                <h3>💐 捧花</h3>
+                <ul>
+                    <li>新娘捧花、新郎胸花、主婚人胸花×2</li>
+                    <li><strong>負責</strong>：心榆（VaVa）</li>
+                </ul>
+
+                <h3>🎎 採頭娃娃</h3>
+                <ul>
+                    <li>採頭娃娃（Ivy提供）：<strong>2/4 19:30 Ivy取貨，放在擎車上</strong></li>
+                    <li>請璇姊錄典華下車畫面（10:00）</li>
+                </ul>
+
+                <h3>🎁 婚禮小物</h3>
+                <ul>
+                    <li>婚禮小物、送客禮（乾媽）：佩璇</li>
+                    <li>📦 子擎取貨：2/6 14:00（賓熙熙），拿到貨交給擎媽</li>
+                </ul>
+
+                <h3>🎈 氣球類</h3>
+                <ul>
+                    <li><strong>三進小物</strong>：若棻（20個氣球裝上慈籃子，送完後裝泡芙）</li>
+                    <li><strong>一進氣球</strong>：若棻（爸爸氣球4個爆破氣球）</li>
+                </ul>
+            </div>
+
+            <div>
+                <h3>其他道具</h3>
+                <ul>
+                    <li><strong>擎爸媽先帶到車上</strong>：婚紗相本、無框大畫、謝卡木盒、泡泡槍、紙本喜帖、花童灑花籃、簽到簿、高跟鞋、工作人員胸牌、美女與野獸花盅、送客禮貝殼泡芙（交給若棻）</li>
+                    <li><strong>子擎車上要帶著</strong>：璇媽禮服、璇叔叔西裝、新娘三套西裝、車頭彩頭娃娃、新郎獵裝（第三套）</li>
+                    <li>座位表、帶位表：<strong>若棻印＆管理</strong></li>
+                    <li>謝卡木盒：放迎賓桌或交總召</li>
+                    <li>螢光棒、沙袋：佩璇</li>
+                    <li>愛心墨鏡：棻 / 玻璃鞋：璇</li>
+                    <li>掛燙機：<strong>子擎帶到新娘休息室</strong></li>
+                </ul>
+
+                <h3>🏛 佈置物品</h3>
+                <ul>
+                    <li>金色燭台、白色野餐佈置、紙本喜帖展示</li>
+                    <li><strong>負責人：若棻</strong></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <h2>📋 總召當天任務清單</h2>
+
+        <div class="two-column">
+            <div>
+                <div class="time-section">
+                    <h3>⏰ 10:00–11:00</h3>
+                    <ul class="checkbox-list">
+                        <li>🎈交代空爆氣球時間，爆破器綁繩子，周圍桌椅挪開</li>
+                        <li>找招待＆禮金人員，交代佈置禮金桌及迎賓桌</li>
+                        <li>確認捧花及胸花到達</li>
+                        <li>找新娘給她卡片＋捧花胸花＋拿謝卡、高跟鞋、螢光棒、泡泡槍、花瓣</li>
+                        <li>找2人協助掛螢光棒</li>
+                        <li>交代禮金人員喜餅名單</li>
+                        <li>與主持人召集招待、伴郎伴娘核對流程</li>
+                        <li>告知招待避免顏色鮮艷賓客坐走道</li>
+                        <li>找阿芳姊姊協助拍攝墨鏡Reels</li>
+                    </ul>
+                </div>
+
+                <div class="time-section">
+                    <h3>⏰ 11:00–11:20</h3>
+                    <ul class="checkbox-list">
+                        <li>🎈確認空爆球接近完成</li>
+                        <li>找問誓人員寫誓詞卡並交代流程</li>
+                        <li>找小幫手交爸爸氣球</li>
+                        <li>召集伴郎伴娘、花童、主婚人彩排</li>
+                        <li>確認新人狀態及需求</li>
+                        <li>🎈找招待負責：氣球爆破後小孩哭鬧馬上帶離</li>
+                    </ul>
+                </div>
+
+                <div class="time-section">
+                    <h3>⏰ 11:20–11:50</h3>
+                    <ul class="checkbox-list">
+                        <li>彩排時間</li>
+                        <li>🎈確認空爆球無問題</li>
+                        <li>🎈安排爆破後收拾人員（找上慈）</li>
+                        <li>確認誓詞卡完成，人員理解流程</li>
+                    </ul>
+                </div>
+
+                <div class="time-section">
+                    <h3>⏰ 11:50–12:20</h3>
+                    <ul class="checkbox-list">
+                        <li>迎賓時間</li>
+                        <li>召集招待至門口帶位</li>
+                        <li>找芳如姊姊引導主桌親友入座</li>
+                        <li>招呼賓客自行取用調酒</li>
+                    </ul>
+                </div>
+
+                <div class="time-section">
+                    <h3>⏰ 12:20–12:30</h3>
+                    <ul class="checkbox-list">
+                        <li>確認新娘帶好爸爸氣球</li>
+                        <li>告知小幫手交手後拿走氣球及捧花</li>
+                        <li>與主持人確認無意外</li>
+                        <li>🎈告知爆破＆收拾人員準備</li>
+                    </ul>
+                </div>
+
+                <div class="time-section">
+                    <h3>⏰ 12:30–12:50</h3>
+                    <ul class="checkbox-list">
+                        <li>第一次進場（花童、伴郎伴娘、主婚人、新郎、新娘及媽）</li>
+                        <li>🎈爆破氣球</li>
+                        <li>🎈爆破完確認賓客＆收拾善後</li>
+                        <li>迅速到台前準備問誓</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <div class="time-section">
+                    <h3>⏰ 12:50–13:20</h3>
+                    <ul class="checkbox-list">
+                        <li>可暫時休息</li>
+                        <li>走動關心賓客狀況</li>
+                        <li>賓客照片出現時引導拍照</li>
+                        <li>協助阿芳姊姊拍Reels</li>
+                    </ul>
+                </div>
+
+                <div class="time-section">
+                    <h3>⏰ 13:25–13:40</h3>
+                    <ul class="checkbox-list">
+                        <li>準備二進，天降螢光棒</li>
+                        <li>巡桌確認每人拿到螢光棒</li>
+                        <li>引導揮動螢光棒</li>
+                        <li>猜歌困難時找年輕賓客幫忙</li>
+                    </ul>
+                </div>
+
+                <div class="time-section">
+                    <h3>⏰ 13:40–13:55</h3>
+                    <ul class="checkbox-list">
+                        <li>敬酒時協助拍照</li>
+                    </ul>
+                </div>
+
+                <div class="time-section">
+                    <h3>⏰ 14:10–14:25</h3>
+                    <ul class="checkbox-list">
+                        <li>準備三進公主氣球</li>
+                        <li>引導賓客取氣球或協助發放</li>
+                    </ul>
+                </div>
+
+                <div class="time-section">
+                    <h3>⏰ 14:25–14:30</h3>
+                    <ul class="checkbox-list">
+                        <li>新娘致詞時將氣球籃裝滿貝殼泡芙</li>
+                    </ul>
+                </div>
+
+                <div class="time-section">
+                    <h3>⏰ 14:30後</h3>
+                    <ul class="checkbox-list">
+                        <li>送客時補充貝殼泡芙</li>
+                        <li>巡會場賓客狀態</li>
+                        <li>協助拍攝合照</li>
+                        <li>對工作人員致謝</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <h2>✅ 最後提醒</h2>
+        <div class="highlight">
+            <p>📌 <strong>當天任何突發狀況 → 第一時間找總召若棻</strong></p>
+            <p>📌 <strong>招待請記得引導大家去喝酒🍻（100 杯目標！）</strong></p>
+        </div>
+    </div>
+</body>
+</html>
