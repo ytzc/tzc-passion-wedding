@@ -237,8 +237,47 @@
             font-size: 13px;
         }
     </style>
+    <style>
+        .back-to-home {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #d4145a 0%, #ff5a8a 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 16px rgba(212, 20, 90, 0.3);
+            transition: all 0.3s ease;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .back-to-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 20, 90, 0.4);
+        }
+        @media print {
+            .back-to-home { display: none; }
+        }
+        @media (max-width: 768px) {
+            .back-to-home {
+                bottom: 16px;
+                right: 16px;
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <a href="index.html" class="back-to-home">
+        <span>🏠</span>
+        <span>返回首頁</span>
+    </a>
     <button class="btn-print no-print" onclick="window.print()">🖨️ 列印 / 存成 PDF</button>
     
     <div class="container">
