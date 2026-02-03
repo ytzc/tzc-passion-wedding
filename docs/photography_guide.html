@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小王子攝影參考 - 婚禮雙機錄影重點流程</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #d4145a;
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+            text-align: center;
+            background: linear-gradient(135deg, #d4145a 0%, #ff5a8a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #6c757d;
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .section {
+            margin-bottom: 32px;
+            padding: 24px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 4px solid #d4145a;
+        }
+
+        .section.prep {
+            border-left-color: #9c27b0;
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+        }
+
+        .section.entrance {
+            border-left-color: #e91e63;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+        }
+
+        .section.other {
+            border-left-color: #ff9800;
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+        }
+
+        .section.flexible {
+            border-left-color: #4caf50;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+        }
+
+        .section.cameras {
+            border-left-color: #2196f3;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        }
+
+        h2 {
+            color: #1e2a78;
+            font-size: 1.6rem;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h3 {
+            color: #d4145a;
+            font-size: 1.3rem;
+            margin: 20px 0 12px;
+            padding-left: 16px;
+            border-left: 3px solid #d4145a;
+        }
+
+        .time {
+            display: inline-block;
+            background: #fff;
+            color: #d4145a;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-right: 8px;
+            box-shadow: 0 2px 8px rgba(212, 20, 90, 0.15);
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            padding: 10px 0 10px 32px;
+            position: relative;
+            color: #2c3e50;
+        }
+
+        li::before {
+            content: "•";
+            position: absolute;
+            left: 12px;
+            color: #d4145a;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #fff59d 0%, #fff176 100%);
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin: 16px 0;
+            border-left: 4px solid #fbc02d;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(251, 192, 45, 0.2);
+        }
+
+        .key-moment {
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 12px 0;
+            border-left: 4px solid #e91e63;
+            font-weight: 600;
+        }
+
+        .camera-role {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .camera-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .camera-card h4 {
+            color: #1e2a78;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #d4145a;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .back-to-home {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #d4145a 0%, #ff5a8a 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 16px rgba(212, 20, 90, 0.3);
+            transition: all 0.3s ease;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-to-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 20, 90, 0.4);
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            .back-to-home {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+
+            .container {
+                padding: 24px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            .camera-role {
+                grid-template-columns: 1fr;
+            }
+
+            .back-to-home {
+                bottom: 16px;
+                right: 16px;
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-to-home">
+        <span>🏠</span>
+        <span>返回首頁</span>
+    </a>
+
+    <div class="container">
+        <h1>📸 小王子攝影參考</h1>
+        <div class="subtitle">婚禮雙機錄影重點流程</div>
+
+        <div class="section prep">
+            <h2>⏰ 彩排與迎賓</h2>
+            <ul>
+                <li><span class="time">11:30</span>彩排結束 → 新人可能上頂樓 S2 拍類婚紗</li>
+                <li><span class="time">11:50</span>賓客開始到場迎賓</li>
+            </ul>
+        </div>
+
+        <div class="section entrance">
+            <h2>🎬 三次進場（必拍）</h2>
+
+            <h3>【一進】開場進場</h3>
+            <p><span class="time">12:30</span></p>
+            <ul>
+                <li>花童泡泡槍 + 撒花瓣</li>
+                <li>伴郎伴娘 × 2 對</li>
+                <li>新郎持捧花進場</li>
+                <li>新娘 + 媽媽進場（新娘手臂綁氣球）</li>
+                <li>交手儀式</li>
+            </ul>
+            <div class="highlight">
+                ⭐ 關鍵畫面：新郎親吻新娘 → 爆破氣球 × 4
+            </div>
+
+            <h3>【二進】天降螢光棒</h3>
+            <p><span class="time">13:25</span></p>
+            <ul>
+                <li>新娘唱歌進場至中央</li>
+                <li>新郎搭升降梯唱 RAP</li>
+                <li>新人會合上台</li>
+                <li>賓客揮螢光棒</li>
+            </ul>
+
+            <h3>【三進】謝幕</h3>
+            <p><span class="time">14:25</span></p>
+            <ul>
+                <li>新人持氣球 × 20 進場發送</li>
+                <li>新娘致詞</li>
+                <li>謝幕煙火影片</li>
+            </ul>
+        </div>
+
+        <div class="section other">
+            <h2>📌 其他重要時刻</h2>
+            <ul>
+                <li><span class="time">12:50</span>交換誓詞（4 人問誓）+ 香檳儀式 + 舉杯</li>
+                <li><span class="time">13:40</span>敬酒（逐桌互動）</li>
+                <li><span class="time">14:30</span>送客（背板前合照）</li>
+            </ul>
+        </div>
+
+        <div class="section flexible">
+            <h2>💡 用餐時段彈性拍攝</h2>
+            <p><span class="time">12:50-14:25</span> 新人換裝或用餐時段</p>
+            <div class="key-moment">
+                攝影師可逐桌訪問：<br>
+                「請問有什麼話想對新人說嗎？」<br>
+                收集各桌賓客祝福與回憶分享
+            </div>
+        </div>
+
+        <div class="section cameras">
+            <h2>🎥 雙機建議分工</h2>
+            <div class="camera-role">
+                <div class="camera-card">
+                    <h4>
+                        📹 機位 A
+                        <span class="badge">主機</span>
+                    </h4>
+                    <p><strong>跟拍新人</strong></p>
+                    <ul style="margin-top: 8px;">
+                        <li>特寫鏡頭</li>
+                        <li>互動畫面</li>
+                        <li>情感捕捉</li>
+                    </ul>
+                </div>
+                <div class="camera-card">
+                    <h4>
+                        📹 機位 B
+                        <span class="badge">副機</span>
+                    </h4>
+                    <p><strong>固定廣角</strong></p>
+                    <ul style="margin-top: 8px;">
+                        <li>全景畫面</li>
+                        <li>賓客反應</li>
+                        <li>爆破氣球等關鍵時刻</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
