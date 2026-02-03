@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📸 小王子攝影會議筆記 - 婚禮動態錄影流程確認</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #d4145a;
+            font-size: 2rem;
+            margin-bottom: 12px;
+            text-align: center;
+            background: linear-gradient(135deg, #d4145a 0%, #ff5a8a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #6c757d;
+            font-size: 1rem;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .section {
+            margin-bottom: 32px;
+            padding: 24px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 4px solid #d4145a;
+        }
+
+        .section.important {
+            border-left-color: #dc3545;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
+        }
+
+        .section.highlight {
+            border-left-color: #ffc107;
+            background: linear-gradient(135deg, #fffbf0 0%, #fff9e6 100%);
+        }
+
+        h2 {
+            color: #1e2a78;
+            font-size: 1.4rem;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        h3 {
+            color: #d4145a;
+            font-size: 1.2rem;
+            margin: 16px 0 12px;
+            padding-left: 12px;
+            border-left: 3px solid #d4145a;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            padding: 8px 0 8px 28px;
+            position: relative;
+            color: #2c3e50;
+        }
+
+        li::before {
+            content: "•";
+            position: absolute;
+            left: 12px;
+            color: #d4145a;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin: 16px 0;
+            border-left: 4px solid #2196f3;
+            font-weight: 600;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin: 16px 0;
+            border-left: 4px solid #ff9800;
+            font-weight: 600;
+        }
+
+        .key-point {
+            background: linear-gradient(135deg, #fff59d 0%, #fff176 100%);
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin: 16px 0;
+            border-left: 4px solid #fbc02d;
+            font-weight: 600;
+        }
+
+        .back-to-home {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #d4145a 0%, #ff5a8a 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 16px rgba(212, 20, 90, 0.3);
+            transition: all 0.3s ease;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-to-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 20, 90, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+            .container {
+                padding: 24px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-to-home">
+        <span>🏠</span>
+        <span>返回首頁</span>
+    </a>
+
+    <div class="container">
+        <h1>📸 小王子攝影會議筆記</h1>
+        <div class="subtitle">
+            📅 日期：2026/02/03<br>
+            主題：婚禮動態錄影流程確認＋拍攝重點＋三進氣球活動安排
+        </div>
+
+        <div class="section">
+            <h2>一、攝影師到場與拍攝安排</h2>
+            <ul>
+                <li><strong>11:00</strong> 攝影師抵達現場</li>
+                <li>彩排時會先拍攝：
+                    <ul style="margin-left: 20px;">
+                        <li>交手畫面</li>
+                        <li>手部細節特寫（交換物品、動作細節）</li>
+                    </ul>
+                </li>
+                <li>主持人會先教導新人與相關人員走一次</li>
+                <li>小王子攝影師會再重複拍攝一次，確保畫面完整</li>
+            </ul>
+        </div>
+
+        <div class="section important">
+            <h2>二、正式進場動線與現場站位提醒</h2>
+
+            <h3>親友拍攝位置</h3>
+            <div class="warning-box">
+                ⚠️ <strong>花童親友的爸爸拍攝時：</strong><br>
+                • 必須站在攝影師後方<br>
+                • 不要擋到雙機鏡頭<br>
+                • 不要站在紅毯正中間
+            </div>
+
+            <h3>儐相行走節奏</h3>
+            <ul>
+                <li>儐相需走到第 3～4 桌之後（甚至走完）</li>
+                <li>再讓後面的人進場，避免塞住鏡頭與動線</li>
+            </ul>
+
+            <h3>新郎父母、新郎進場</h3>
+            <ul>
+                <li><strong>新郎父母：</strong>慢慢走、步伐穩定</li>
+                <li><strong>新郎拿捧花：</strong>
+                    <ul style="margin-left: 20px;">
+                        <li>慢慢走</li>
+                        <li>不要一直低頭看地板</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>氣球爸爸注意</h3>
+            <ul>
+                <li>氣球需舉高「超過頭」</li>
+                <li>避免擋住新娘臉部</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>三、紅毯走位與畫面表情提醒</h2>
+            <div class="info-box">
+                📸 <strong>走紅毯時：</strong><br>
+                • 盡量不要看地上<br>
+                • 拉裙擺可以，但動作自然<br>
+                • 可以看鏡頭、跟賓客揮手<br><br>
+                <strong>攝影師提醒：抬頭微笑畫面最好看</strong>
+            </div>
+        </div>
+
+        <div class="section important">
+            <h2>四、爆破氣球橋段注意事項</h2>
+            <div class="warning-box">
+                ⚠️ <strong>爆破時需提醒：</strong><br>
+                • 小朋友不要衝去拍氣球<br>
+                • 長輩不要太興奮跑進紅毯區<br>
+                • 避免擋鏡頭＋現場混亂
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>五、親吻橋段安排</h2>
+            <div class="key-point">
+                💡 <strong>親吻前會先卸下：</strong><br>
+                • 捧花<br>
+                • 氣球<br><br>
+                ✅ 必須寫入流程，主持人也要提前 cue
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>六、誓詞流程與站位建議</h2>
+
+            <h3>誓詞人員集合位置</h3>
+            <ul>
+                <li>建議站在：主持人旁邊、音控台前方（台下集合）</li>
+                <li><strong>攝影師建議：</strong>四位誓詞人可站上台上，因燈光較充足，畫面更清楚</li>
+            </ul>
+
+            <div class="info-box">
+                ℹ️ <strong>補充：</strong><br>
+                本次誓詞為 4 人問誓<br>
+                不會拍新人互問彼此的畫面（避免重複）
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>七、香檳儀式拍攝重點</h2>
+            <ul>
+                <li>香檳儀式由新郎＋佩璇出力完成</li>
+                <li><strong>新人視線：</strong>
+                    <ul style="margin-left: 20px;">
+                        <li>不要一直看下面</li>
+                        <li>可以看彼此、看觀眾</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>舉杯動作提醒</h3>
+            <div class="key-point">
+                🥂 <strong>舉杯技巧：</strong><br>
+                • 舉杯時「往前推」避免擋臉<br>
+                • 不要舉太高<br>
+                • 可先敲杯增加自然感<br><br>
+                <strong>攝影師強調：胸口往前推最重要</strong>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>八、二進唱歌流程確認</h2>
+
+            <h3>紅毯中間兩人會合</h3>
+            <ul>
+                <li><strong>女生：</strong>右手拿麥克風、左手挽新郎</li>
+                <li><strong>新郎：</strong>協助拉裙襬</li>
+            </ul>
+
+            <h3>猜歌互動安排</h3>
+            <ul>
+                <li>由主持人現場隨機應變</li>
+                <li><strong>攝影師提醒：</strong>需安排「樁腳」帶動氣氛</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>九、用餐時段拍攝安排</h2>
+            <div class="warning-box">
+                ⚠️ <strong>不建議拍攝時間：12:50～14:25</strong><br>
+                現場通常吵雜，攝影師不建議此時大量拍攝
+            </div>
+
+            <h3>建議賓客拍照方式</h3>
+            <ul>
+                <li><strong>時間：</strong>13:55 開始，約 15 分鐘</li>
+                <li><strong>地點：</strong>背板區拍攝</li>
+                <li>想拍的人自行過來</li>
+                <li>小王子會架設攝影機錄影</li>
+            </ul>
+        </div>
+
+        <div class="section highlight">
+            <h2>十、三進氣球活動流程（本次會議重點補充）</h2>
+
+            <h3>活動方式（最順流程）</h3>
+            <ul>
+                <li>親友一對一對站在紅毯上</li>
+                <li>攝影師會順勢往前推拍攝</li>
+                <li>前面親友比動作後離開</li>
+                <li>一路推進到新人（約第11對）</li>
+            </ul>
+
+            <h3>新人出場安排</h3>
+            <div class="key-point">
+                🎬 <strong>攝影師建議新人：</strong><br>
+                • 提前在門口等待<br>
+                • 門打開後攝影師剛好拍到新人畫面<br>
+                • 新人可比動作（比愛心、KISS、搞怪表情皆可）<br><br>
+                <strong>Ending 完這段 → 正式三進開始</strong>
+            </div>
+
+            <h3>三進發氣球</h3>
+            <ul>
+                <li>新人往前走邊發氣球即可</li>
+                <li>人數不一定要 20 個</li>
+                <li>重點是紅毯站滿就好</li>
+            </ul>
+
+            <div class="warning-box">
+                💬 <strong>主持人需提前 cue：</strong><br>
+                「請大家把紅毯佔滿！」<br>
+                並告知大家要對鏡頭比動作
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>十一、送客與背板拍攝</h2>
+            <ul>
+                <li>小王子背板攝影機主要是側錄</li>
+                <li>背板合照需另請親友協助拍照</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>十二、拍攝範圍與賓客入鏡說明</h2>
+            <ul>
+                <li>攝影師會抓拍迎賓、簽到等畫面</li>
+                <li>但無法保證 15 桌所有賓客都完整入鏡</li>
+                <li>若有特別重要親友（奶奶、阿嬤等），可提前指定，希望多拍</li>
+            </ul>
+            <div class="info-box">
+                📌 婚禮紀實是「當下記錄」，不是可重拍的預告片形式
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>十三、祝福錄影安排</h2>
+            <ul>
+                <li><strong>時間：</strong>13:55 開始，約 10～15 分鐘</li>
+                <li>依當天狀況調整</li>
+                <li>建議提前通知親友：準備好就快速過來錄祝福</li>
+                <li><strong>至少四位伴郎伴娘務必錄到</strong></li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>十四、成品輸出內容確認</h2>
+            <div class="info-box">
+                💿 <strong>最終會提供一個 USB，內容包含：</strong><br>
+                • 一進完整檔案<br>
+                • 二進完整檔案<br>
+                • 三進完整檔案（若有）<br>
+                • 送客完整檔案<br>
+                • 一支剪輯 MV<br><br>
+                ⏳ <strong>MV 交付時間：約 2 個月</strong>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>十五、影片風格與濾鏡需求</h2>
+            <ul>
+                <li>新人希望偏自然、不套重濾鏡</li>
+                <li><strong>攝影師表示：</strong>
+                    <ul style="margin-left: 20px;">
+                        <li>基本拍攝以自然光感為主</li>
+                        <li>不會特別套濾鏡</li>
+                        <li>若新人有喜歡的影片風格可提前提供參考</li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="key-point">
+                📌 <strong>建議：</strong>禮拜六前傳喜歡的影片範例給攝影師
+            </div>
+        </div>
+
+        <div class="section highlight">
+            <h2>✅ 本次會議最重要結論</h2>
+            <ol style="padding-left: 20px;">
+                <li style="list-style: decimal;">三進氣球活動採「一對一對比動作→新人門口Ending→正式三進發氣球」</li>
+                <li style="list-style: decimal;">主持人需提前 cue 紅毯站滿＋比動作活動</li>
+                <li style="list-style: decimal;">祝福錄影時間：13:55 開始，約 10～15 分鐘，需提前通知親友</li>
+                <li style="list-style: decimal;">成品 USB 含分段檔案＋MV，約 2 個月交付</li>
+                <li style="list-style: decimal;">影片風格以自然為主，可提前提供參考影片</li>
+            </ol>
+        </div>
+
+        <div style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #e9ecef; text-align: center; color: #6c757d; font-size: 13px;">
+            <div style="margin-bottom: 8px;">Made with ❤️ for 子擎 & 佩璇's Special Day</div>
+            <div style="display: inline-block; background: #e9ecef; padding: 4px 12px; border-radius: 12px; font-weight: 600;">
+                版本：<span id="site-version">__VERSION__</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

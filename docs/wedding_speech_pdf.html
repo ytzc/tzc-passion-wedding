@@ -312,5 +312,34 @@
         </div>
     </div>
     </div>
+
+    <script>
+        // 密碼保護
+        (function() {
+            const CORRECT_PASSWORD = 'tzc';
+            const PASSWORD_KEY = 'wedding_speech_access';
+
+            // 檢查是否已經驗證過（在當前會話中）
+            const hasAccess = sessionStorage.getItem(PASSWORD_KEY);
+
+            if (!hasAccess) {
+                // 隱藏內容
+                document.body.style.display = 'none';
+
+                // 提示輸入密碼
+                const password = prompt('請輸入密碼以查看致詞內容：');
+
+                if (password === CORRECT_PASSWORD) {
+                    // 密碼正確，保存驗證狀態並顯示內容
+                    sessionStorage.setItem(PASSWORD_KEY, 'true');
+                    document.body.style.display = 'block';
+                } else {
+                    // 密碼錯誤，返回首頁
+                    alert('密碼錯誤！');
+                    window.location.href = 'index.html';
+                }
+            }
+        })();
+    </script>
 </body>
 </html>
