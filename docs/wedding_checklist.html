@@ -175,6 +175,82 @@
         strong {
             color: #d4145a;
         }
+
+        /* 不同區塊的顏色樣式 */
+        .section-team {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-left-color: #2196f3;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            border-left: 4px solid #2196f3;
+        }
+
+        .section-bridal-party {
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+            border-left-color: #e91e63;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            border-left: 4px solid #e91e63;
+        }
+
+        .section-vows {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            border-left-color: #9c27b0;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            border-left: 4px solid #9c27b0;
+        }
+
+        .section-reception {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-left-color: #4caf50;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            border-left: 4px solid #4caf50;
+        }
+
+        .section-items {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left-color: #ff9800;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            border-left: 4px solid #ff9800;
+        }
+
+        .section-coordinator {
+            background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+            border-left-color: #fbc02d;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            border-left: 4px solid #fbc02d;
+        }
+
+        .section-team h2,
+        .section-bridal-party h2,
+        .section-vows h2,
+        .section-reception h2,
+        .section-items h2,
+        .section-coordinator h2 {
+            margin-top: 0;
+        }
+
+        @media print {
+            .section-team,
+            .section-bridal-party,
+            .section-vows,
+            .section-reception,
+            .section-items,
+            .section-coordinator {
+                border-left-width: 3px;
+                padding: 12px;
+            }
+        }
     </style>
     <style>
         .back-to-home {
@@ -229,7 +305,7 @@
         <div class="section-divider"></div>
 
         <div class="two-column">
-            <div class="compact-section">
+            <div class="compact-section section-team">
                 <h2>🎤 典華＆團隊</h2>
                 <ul>
                     <li><strong>主持人</strong>：典華</li>
@@ -239,7 +315,7 @@
                 </ul>
             </div>
 
-            <div class="compact-section">
+            <div class="compact-section section-bridal-party">
                 <h2>🤵👰 伴郎伴娘＆花童</h2>
                 <ul>
                     <li><strong>伴郎</strong>：宣毅、立凱</li>
@@ -248,7 +324,7 @@
                 </ul>
             </div>
 
-            <div class="compact-section">
+            <div class="compact-section section-vows">
                 <h2>✍ 誓詞提問分工</h2>
                 <ul>
                     <li><strong>問新郎誓詞</strong>：若棻、麗晴</li>
@@ -259,87 +335,92 @@
 
         <div class="section-divider"></div>
 
-        <h2>🧾 招待組分工（收禮／帶位）</h2>
-        
-        <div class="two-column">
-            <div>
-                <h3>10:00–11:00 禮金人員＆招待</h3>
-                <ul>
-                    <li><strong>禮金</strong>：心榆（記帳點紅包）、染墨（發喜餅輔助）</li>
-                    <li><strong>招待帶位</strong>：奕翔、芳如、伴娘×2</li>
-                </ul>
-                <p><strong>任務</strong>：布置禮金桌、迎賓桌、掛螢光棒、熟悉場地、對流程</p>
-                
-                <div class="warning">
-                    ⚠️ 招待請引導賓客去喝酒🍻 至少消耗 <strong>100 杯</strong>🙏<br>
-                    💡 總召若棻有權利加購調酒上限
-                </div>
-            </div>
+        <div class="section-reception">
+            <h2>🧾 招待組分工（收禮／帶位）</h2>
 
-            <div>
-                <h3>男方招待組</h3>
-                <ul>
-                    <li><strong>男方收禮金</strong>：10:30 到</li>
-                    <li><strong>男方帶位</strong>：小潘（11:30 到）</li>
-                </ul>
+            <div class="two-column">
+                <div>
+                    <h3>10:00–11:00 禮金人員＆招待</h3>
+                    <ul>
+                        <li><strong>禮金</strong>：心榆（記帳點紅包）、染墨（發喜餅輔助）</li>
+                        <li><strong>招待帶位</strong>：奕翔、芳如、伴娘×2</li>
+                    </ul>
+                    <p><strong>任務</strong>：布置禮金桌、迎賓桌、掛螢光棒、熟悉場地、對流程</p>
+
+                    <div class="warning">
+                        ⚠️ 招待請引導賓客去喝酒🍻 至少消耗 <strong>100 杯</strong>🙏<br>
+                        💡 總召若棻有權利加購調酒上限
+                    </div>
+                </div>
+
+                <div>
+                    <h3>男方招待組</h3>
+                    <ul>
+                        <li><strong>男方收禮金</strong>：10:30 到</li>
+                        <li><strong>男方帶位</strong>：小潘（11:30 到）</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
         <div class="section-divider"></div>
 
-        <h2>🎁 物品清單</h2>
-        
-        <div class="two-column">
-            <div>
-                <h3>💐 捧花</h3>
-                <ul>
-                    <li>新娘捧花、新郎胸花、主婚人胸花×2</li>
-                    <li><strong>負責</strong>：心榆（VaVa）</li>
-                </ul>
+        <div class="section-items">
+            <h2>🎁 物品清單</h2>
 
-                <h3>🎎 採頭娃娃</h3>
-                <ul>
-                    <li>採頭娃娃（Ivy提供）：<strong>2/4 19:30 Ivy取貨，放在擎車上</strong></li>
-                    <li>請璇姊錄典華下車畫面（10:00）</li>
-                </ul>
+            <div class="two-column">
+                <div>
+                    <h3>💐 捧花</h3>
+                    <ul>
+                        <li>新娘捧花、新郎胸花、主婚人胸花×2</li>
+                        <li><strong>負責</strong>：心榆（VaVa）</li>
+                    </ul>
 
-                <h3>🎁 婚禮小物</h3>
-                <ul>
-                    <li>📦 子擎取貨：2/6 14:00（賓熙熙），拿到貨交給擎媽</li>
-                </ul>
+                    <h3>🎎 採頭娃娃</h3>
+                    <ul>
+                        <li>採頭娃娃（Ivy提供）：<strong>2/4 19:30 Ivy取貨，放在擎車上</strong></li>
+                        <li>請璇姊錄典華下車畫面（10:00）</li>
+                    </ul>
 
-                <h3>🎈 氣球類</h3>
-                <ul>
-                    <li><strong>三進小物</strong>：若棻（20個氣球裝上慈籃子，送完後裝泡芙）</li>
-                    <li><strong>一進氣球</strong>：若棻（爸爸氣球4個爆破氣球）</li>
-                </ul>
-            </div>
+                    <h3>🎁 婚禮小物</h3>
+                    <ul>
+                        <li>📦 子擎取貨：2/6 14:00（賓熙熙），拿到貨交給擎媽</li>
+                    </ul>
 
-            <div>
-                <h3>其他道具</h3>
-                <ul>
-                    <li><strong>擎爸媽 2/6 晚上載到沐蘭下貨，宣毅 2/7 早上 9:30 載送到大直典華會場</strong>：婚紗相本、無框大畫、謝卡木盒、泡泡槍、紙本喜帖、花童灑花籃、簽到簿、高跟鞋、工作人員胸牌、美女與野獸花盅、送客禮貝殼泡芙</li>
-                    <li><strong>子擎車上要帶著</strong>：璇媽禮服、璇叔叔西裝、新娘三套西裝、車頭彩頭娃娃、新郎獵裝（第三套）</li>
-                    <li>座位表、帶位表：<strong>若棻印＆管理</strong></li>
-                    <li>謝卡木盒：放迎賓桌或交總召</li>
-                    <li>螢光棒、沙袋：佩璇</li>
-                    <li>愛心墨鏡：棻 / 玻璃鞋：璇</li>
-                    <li>掛燙機：<strong>子擎帶到新娘休息室</strong></li>
-                </ul>
+                    <h3>🎈 氣球類</h3>
+                    <ul>
+                        <li><strong>三進小物</strong>：若棻（20個氣球裝上慈籃子，送完後裝泡芙）</li>
+                        <li><strong>一進氣球</strong>：若棻（爸爸氣球4個爆破氣球）</li>
+                    </ul>
+                </div>
 
-                <h3>🏛 佈置物品</h3>
-                <ul>
-                    <li>金色燭台、白色野餐佈置、紙本喜帖展示</li>
-                    <li><strong>負責人：若棻</strong></li>
-                </ul>
+                <div>
+                    <h3>其他道具</h3>
+                    <ul>
+                        <li><strong>擎爸媽 2/6 晚上載到沐蘭下貨，宣毅 2/7 早上 9:30 載送到大直典華會場</strong>：婚紗相本、無框大畫、謝卡木盒、泡泡槍、紙本喜帖、花童灑花籃、簽到簿、高跟鞋、工作人員胸牌、美女與野獸花盅、送客禮貝殼泡芙</li>
+                        <li><strong>子擎車上要帶著</strong>：璇媽禮服、璇叔叔西裝、新娘三套西裝、車頭彩頭娃娃、新郎獵裝（第三套）</li>
+                        <li>座位表、帶位表：<strong>若棻印＆管理</strong></li>
+                        <li>謝卡木盒：放迎賓桌或交總召</li>
+                        <li>螢光棒、沙袋：佩璇</li>
+                        <li>愛心墨鏡：棻 / 玻璃鞋：璇</li>
+                        <li>掛燙機：<strong>子擎帶到新娘休息室</strong></li>
+                    </ul>
+
+                    <h3>🏛 佈置物品</h3>
+                    <ul>
+                        <li>金色燭台、白色野餐佈置、紙本喜帖展示</li>
+                        <li><strong>負責人：若棻</strong></li>
+                    </ul>
+                </div>
             </div>
         </div>
 
         <div class="page-break"></div>
 
-        <h2>📋 總召當天任務清單</h2>
+        <div class="section-coordinator">
+            <h2>📋 總召當天任務清單</h2>
 
-        <div class="two-column">
+            <div class="two-column">
             <div>
                 <div class="time-section">
                     <h3>⏰ 10:00–11:00</h3>
@@ -462,6 +543,7 @@
                     </ul>
                 </div>
             </div>
+        </div>
         </div>
 
         <div class="section-divider"></div>
