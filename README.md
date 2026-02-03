@@ -50,6 +50,9 @@ npx serve docs
 
 ```
 tzc-passion-wedding/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml                # GitHub Actions 自動部署配置
 ├── docs/                              # GitHub Pages 發布目錄
 │   ├── index.html                    # 主索引頁
 │   ├── wedding_checklist.html        # 工作分配清單
@@ -61,16 +64,44 @@ tzc-passion-wedding/
 │   ├── 👔 男方帶位表.pdf
 │   ├── 👰 女方帶位表.pdf
 │   └── 大直典華閣樓15桌圖.jpg
+├── .gitignore                         # Git 忽略文件配置
 └── README.md                          # 專案說明文件
 ```
 
-## ⚙️ GitHub Pages 設定
+## 🚀 自動化部署
+
+本專案使用 **GitHub Actions** 自動化部署到 GitHub Pages。
+
+### 部署流程
+
+1. **觸發條件**：當你推送版本 tag（如 `v1.0`, `v1.0.0`）時
+2. **自動執行**：GitHub Actions 會自動：
+   - 檢出該 tag 對應的代碼
+   - 打包 `docs/` 目錄內容
+   - 部署到 `github-pages` environment
+3. **查看結果**：部署完成後訪問 https://ytzc.github.io/tzc-passion-wedding/
+
+### 如何發布新版本
+
+```bash
+# 1. 確保所有變更已提交
+git add .
+git commit -m "your changes"
+git push
+
+# 2. 創建並推送 tag
+git tag v1.0.0
+git push origin v1.0.0
+
+# 3. GitHub Actions 會自動部署
+# 前往 https://github.com/ytzc/tzc-passion-wedding/actions 查看部署狀態
+```
+
+### 初次設定（僅需一次）
 
 1. 前往 GitHub 倉庫的 **Settings** > **Pages**
-2. 在 **Source** 部分選擇 **Deploy from a branch**
-3. 在 **Branch** 選擇 `main` 分支和 `/docs` 資料夾
-4. 點擊 **Save** 儲存設定
-5. 等待幾分鐘後，網站就會發布到 `https://ytzc.github.io/tzc-passion-wedding/`
+2. 在 **Source** 部分選擇 **GitHub Actions**
+3. 儲存設定即可
 
 ## 📝 使用說明
 
