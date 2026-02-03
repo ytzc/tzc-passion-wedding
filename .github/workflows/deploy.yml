@@ -32,7 +32,11 @@ jobs:
         run: |
           TAG="${GITHUB_REF_NAME}"
           echo "Injecting version: $TAG"
-          find ./docs -name "*.html" -type f -exec sed -i "s/__VERSION__/${TAG}/g" {} +
+          echo "Files before replacement:"
+          grep -r "__VERSION__" ./docs || echo "No __VERSION__ found"
+          find ./docs -name "*.html" -type f -print0 | xargs -0 sed -i "s/__VERSION__/${TAG}/g"
+          echo "Files after replacement:"
+          grep -r "版本：" ./docs | head -5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
