@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>參考資料圖片 - 子擎 & 佩璇</title>
+  <style>
+    :root {
+      --primary: #d4145a;
+      --primary-light: #ff5a8a;
+      --primary-dark: #a01045;
+      --secondary: #1e2a78;
+      --accent: #ffc107;
+      --bg-main: #f8f9fa;
+      --bg-card: #ffffff;
+      --text-primary: #2c3e50;
+      --text-secondary: #6c757d;
+      --border: #e9ecef;
+      --shadow: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-hover: 0 4px 16px rgba(0,0,0,0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      padding: 32px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    h1 {
+      color: var(--primary);
+      margin: 0 0 12px;
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      margin: 8px 0 0;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(212, 20, 90, 0.3);
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .gallery-item .overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      padding: 40px 12px 12px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-item:hover .overlay {
+      opacity: 1;
+    }
+
+    .overlay span {
+      color: white;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .lightbox.show {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 8px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .lightbox-close:hover {
+      transform: scale(1.2);
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 50px;
+      color: white;
+      cursor: pointer;
+      padding: 20px;
+      user-select: none;
+      transition: all 0.2s;
+    }
+
+    .lightbox-nav:hover {
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+    }
+
+    .lightbox-prev {
+      left: 20px;
+    }
+
+    .lightbox-next {
+      right: 20px;
+    }
+
+    .lightbox-counter {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 14px;
+      background: rgba(0,0,0,0.5);
+      padding: 8px 16px;
+      border-radius: 20px;
+    }
+
+    footer {
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 2px solid var(--border);
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    .version {
+      display: inline-block;
+      background: #e9ecef;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 12px;
+      }
+
+      .wrap {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      .gallery {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 12px;
+      }
+
+      .gallery-item img {
+        height: 150px;
+      }
+
+      .lightbox-nav {
+        font-size: 30px;
+        padding: 10px;
+      }
+
+      .lightbox-prev {
+        left: 5px;
+      }
+
+      .lightbox-next {
+        right: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a href="index.html" class="back-btn">← 返回首頁</a>
+
+    <div class="header">
+      <h1>📷 參考資料圖片</h1>
+      <div class="subtitle">點擊圖片可放大檢視</div>
+    </div>
+
+    <div class="gallery" id="gallery">
+      <!-- Images will be populated by JavaScript -->
+    </div>
+
+    <footer>
+      <div style="margin-bottom: 8px;">Made with ❤️ for 子擎 & 佩璇's Special Day</div>
+      <div class="version">版本：<span id="site-version">__VERSION__</span></div>
+    </footer>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <span class="lightbox-nav lightbox-prev" onclick="prevImage()">&#10094;</span>
+    <img id="lightbox-img" src="" alt="放大圖片">
+    <span class="lightbox-nav lightbox-next" onclick="nextImage()">&#10095;</span>
+    <div class="lightbox-counter" id="lightbox-counter"></div>
+  </div>
+
+  <script>
+    const images = [
+      'assets/images/ref/IMG_2318.JPEG',
+      'assets/images/ref/IMG_2334.JPEG',
+      'assets/images/ref/IMG_2363.jpg',
+      'assets/images/ref/IMG_2369.JPEG',
+      'assets/images/ref/IMG_2378.JPEG',
+      'assets/images/ref/IMG_3583.JPEG',
+      'assets/images/ref/IMG_3585.JPEG',
+      'assets/images/ref/IMG_3587.JPEG',
+      'assets/images/ref/IMG_3589.JPEG',
+      'assets/images/ref/IMG_4269.JPG',
+      'assets/images/ref/IMG_5992.JPEG',
+      'assets/images/ref/IMG_6001.JPEG'
+    ];
+
+    let currentIndex = 0;
+
+    // Render gallery
+    const gallery = document.getElementById('gallery');
+    images.forEach((src, index) => {
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      item.onclick = () => openLightbox(index);
+      item.innerHTML = `
+        <img src="${src}" alt="參考圖片 ${index + 1}" loading="lazy">
+        <div class="overlay">
+          <span>點擊放大</span>
+        </div>
+      `;
+      gallery.appendChild(item);
+    });
+
+    // Lightbox functions
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCounter = document.getElementById('lightbox-counter');
+
+    function openLightbox(index) {
+      currentIndex = index;
+      updateLightbox();
+      lightbox.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    function updateLightbox() {
+      lightboxImg.src = images[currentIndex];
+      lightboxCounter.textContent = `${currentIndex + 1} / ${images.length}`;
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % images.length;
+      updateLightbox();
+    }
+
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      updateLightbox();
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('show')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    });
+
+    // Close on background click
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+  </script>
+</body>
+</html>
