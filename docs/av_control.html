@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音控流程表</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 12mm;
+        }
+
+        @media print {
+            body { margin: 0; padding: 10px; font-size: 12px; }
+            .no-print { display: none; }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            th {
+                background: #7b1fa2 !important;
+                color: white !important;
+            }
+            .time-section {
+                background: #e1bee7 !important;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-size: 13px;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            max-width: 100%;
+        }
+
+        h1 {
+            color: #7b1fa2;
+            text-align: center;
+            border-bottom: 3px solid #7b1fa2;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            border-left: 5px solid #7b1fa2;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .info-box strong {
+            color: #7b1fa2;
+            font-size: 15px;
+        }
+
+        .time-section {
+            background: linear-gradient(135deg, #e1bee7 0%, #ce93d8 100%);
+            padding: 12px 16px;
+            margin: 25px 0 12px 0;
+            border-radius: 8px;
+            border-left: 4px solid #7b1fa2;
+            font-weight: bold;
+            font-size: 18px;
+            color: #4a148c;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+
+        th {
+            background: #7b1fa2;
+            color: white;
+            padding: 12px 10px;
+            text-align: left;
+            font-weight: bold;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            vertical-align: top;
+            line-height: 1.7;
+        }
+
+        tr:nth-child(even) {
+            background: #faf5fc;
+        }
+
+        tr:hover {
+            background: #f3e5f5;
+        }
+
+        .time-col {
+            width: 100px;
+            font-weight: bold;
+            color: #7b1fa2;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        .event-col {
+            width: 140px;
+            font-weight: 500;
+        }
+
+        .file-tag {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            margin: 2px 0;
+        }
+
+        .video-tag {
+            background: #e3f2fd;
+            color: #1565c0;
+            border: 1px solid #90caf9;
+        }
+
+        .audio-tag {
+            background: #fff3e0;
+            color: #e65100;
+            border: 1px solid #ffcc80;
+        }
+
+        .folder-tag {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+
+        .file-name {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 11px;
+            color: #555;
+            background: #f5f5f5;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: block;
+            margin-top: 4px;
+            word-break: break-all;
+        }
+
+        .cue-point {
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 3px solid #e91e63;
+            margin: 4px 0;
+            font-weight: 500;
+        }
+
+        .highlight-row {
+            background: #fff8e1 !important;
+        }
+
+        .important-row {
+            background: #fce4ec !important;
+        }
+
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #7b1fa2;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(123, 31, 162, 0.3);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .btn-print:hover {
+            background: #6a1b9a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(123, 31, 162, 0.4);
+        }
+
+        .back-to-home {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #d4145a 0%, #ff5a8a 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 16px rgba(212, 20, 90, 0.3);
+            transition: all 0.3s ease;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-to-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 20, 90, 0.4);
+        }
+
+        @media print {
+            .back-to-home { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .back-to-home {
+                bottom: 16px;
+                right: 16px;
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+            table {
+                font-size: 11px;
+            }
+            .time-col {
+                width: 70px;
+                font-size: 12px;
+            }
+        }
+
+        .folder-note {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-size: 13px;
+        }
+
+        .folder-structure {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            background: #263238;
+            color: #aed581;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-to-home no-print">
+        <span>🏠</span>
+        <span>返回首頁</span>
+    </a>
+    <button class="btn-print no-print" onclick="window.print()">🖨️ 列印 / 存成 PDF</button>
+
+    <div class="container">
+        <h1>🎛️ 音控流程表</h1>
+
+        <div class="info-box">
+            <strong>📌 音控師參考資訊</strong><br>
+            📅 日期：2026年2月7日（星期六）午宴<br>
+            📍 地點：典華大直館 3F 閣樓<br>
+            📁 素材資料夾：子擎佩璇0207-典華kimi-v4<br>
+            🎯 三次進場時間：12:30 一進、13:25 二進、14:25 三進
+        </div>
+
+        <div class="folder-note">
+            <strong>📂 資料夾結構說明</strong>
+            <div class="folder-structure">子擎佩璇0207-典華kimi-v4/
+├── 迎賓/
+├── 一次進場/
+├── 用餐/
+├── 二次進場/
+│   └── 猜歌遊戲/
+└── 三進送客/</div>
+        </div>
+
+        <div class="time-section">🎵 迎賓時段（11:50–12:20）</div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="time-col">時間</th>
+                    <th class="event-col">流程</th>
+                    <th>螢幕播放</th>
+                    <th>音樂播放</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="highlight-row">
+                    <td class="time-col">11:50–12:20</td>
+                    <td class="event-col">迎賓</td>
+                    <td>
+                        <span class="file-tag video-tag">📺 影片</span>
+                        <span class="file-name">迎賓/迎賓螢幕-婚紗求婚.mp4</span>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">輪播婚紗影片</div>
+                    </td>
+                    <td>
+                        <span class="file-tag audio-tag">🎵 音樂</span>
+                        <span class="file-name">迎賓/迎賓音樂.MP3</span>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">背景迎賓音樂</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="time-section">💒 一進時段（12:30–12:50）</div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="time-col">時間</th>
+                    <th class="event-col">流程</th>
+                    <th>螢幕播放</th>
+                    <th>音樂播放</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="important-row">
+                    <td class="time-col">12:30</td>
+                    <td class="event-col">主持人開場</td>
+                    <td>
+                        <span class="file-tag video-tag">📺 影片</span>
+                        <span class="file-name">一次進場/一進螢幕1-迪士尼開幕.mp4</span>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">迪士尼開幕影片（0:29）</div>
+                    </td>
+                    <td>
+                        <div style="color: #666; font-size: 12px;">影片內建音效</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="time-col">12:30</td>
+                    <td class="event-col">播放婚紗側錄</td>
+                    <td>
+                        <span class="file-tag video-tag">📺 影片</span>
+                        <span class="file-name">一次進場/一進螢幕2-婚紗側錄美顏.MP4</span>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">婚紗側錄（3:14）</div>
+                    </td>
+                    <td>
+                        <div style="color: #666; font-size: 12px;">影片內建音效</div>
+                    </td>
+                </tr>
+                <tr class="highlight-row">
+                    <td class="time-col">12:30</td>
+                    <td class="event-col">花童、儐相進場</td>
+                    <td rowspan="4" style="vertical-align: middle; text-align: center; background: #f5f5f5;">
+                        <div style="color: #999;">切回現場畫面<br>或輪播婚紗照</div>
+                    </td>
+                    <td>
+                        <span class="file-tag audio-tag">🎵 音樂</span>
+                        <span class="file-name">一次進場/一進音樂2-花童儐相_前奏起.MP3</span>
+                        <div class="cue-point">🎬 CUE：花童開始走時播放</div>
+                    </td>
+                </tr>
+                <tr class="highlight-row">
+                    <td class="time-col">12:35</td>
+                    <td class="event-col">新郎父母進場</td>
+                    <td>
+                        <span class="file-tag audio-tag">🎵 音樂</span>
+                        <span class="file-name">一次進場/一進音樂3-新郎父母進場_副歌起.MP3</span>
+                        <div class="cue-point">🎬 CUE：新郎父母開始走時切換</div>
+                    </td>
+                </tr>
+                <tr class="highlight-row">
+                    <td class="time-col">12:37</td>
+                    <td class="event-col">新郎進場</td>
+                    <td>
+                        <span class="file-tag audio-tag">🎵 音樂</span>
+                        <span class="file-name">一次進場/一進音樂4-新郎進場_前奏起_lucky_me.mp3</span>
+                        <div class="cue-point">🎬 CUE：新郎開始走時切換</div>
+                    </td>
+                </tr>
+                <tr class="important-row">
+                    <td class="time-col">12:40</td>
+                    <td class="event-col">新娘＋媽媽進場</td>
+                    <td>
+                        <span class="file-tag audio-tag">🎵 音樂</span>
+                        <span class="file-name">一次進場/一進音樂5-新娘進場_前奏起_your_tears_are_mine.mp3</span>
+                        <div class="cue-point">🎬 CUE：新娘開始走時切換（重點曲目！）</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="time-col">12:45</td>
+                    <td class="event-col">交手→親吻→爆破</td>
+                    <td style="text-align: center; background: #f5f5f5;">
+                        <div style="color: #999;">現場畫面</div>
+                    </td>
+                    <td>
+                        <div style="color: #666; font-size: 12px;">延續新娘進場音樂<br>或淡出</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="time-col">12:50</td>
+                    <td class="event-col">誓詞＆戒指</td>
+                    <td style="text-align: center; background: #f5f5f5;">
+                        <div style="color: #999;">現場畫面</div>
+                    </td>
+                    <td>
+                        <span class="file-tag audio-tag">🎵 音樂</span>
+                        <span class="file-name">一次進場/一進音樂6-誓詞戒指_背景音樂.MP3</span>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">輕柔背景樂</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="time-col">12:50</td>
+                    <td class="event-col">香檳、致詞、舉杯</td>
+                    <td style="text-align: center; background: #f5f5f5;">
+                        <div style="color: #999;">現場畫面</div>
+                    </td>
+                    <td>
+                        <span class="file-tag audio-tag">🎵 音樂</span>
+                        <span class="file-name">一次進場/一進音樂7-香檳致詞敬酒_背景樂.MP3</span>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">背景樂（致詞時音量調小）</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="time-section">🍽️ 一進後用餐時段（12:55–13:25）</div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="time-col">時間</th>
+                    <th class="event-col">流程</th>
+                    <th>螢幕播放</th>
+                    <th>音樂播放</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="time-col">12:55–13:25</td>
+                    <td class="event-col">賓客用餐<br>（新人換裝）</td>
+                    <td>
+                        <span class="file-tag folder-tag">📁 資料夾</span>
+                        <span class="file-name">用餐/一進後用餐螢幕-新人生活/</span>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">輪播新人生活照片</div>
+                    </td>
+                    <td>
+                        <span class="file-tag audio-tag">🎵 音樂</span>
+                        <span class="file-name">用餐/一進後用餐音樂-Disney_2021.mp3</span>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">迪士尼音樂合輯</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="time-section">🎤 二進時段（13:25–13:40）</div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="time-col">時間</th>
+                    <th class="event-col">流程</th>
+                    <th>螢幕播放</th>
+                    <th>音樂播放</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="important-row">
+                    <td class="time-col">13:25</td>
+                    <td class="event-col">天降螢光棒<br>新人唱歌進場</td>
+                    <td>
+                        <span class="file-tag video-tag">📺 影片</span>
+                        <span class="file-name">二次進場/二進歌詞影片.mp4</span>
+                        <div class="cue-point">🎬 CUE：主持人說開始時播放</div>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">歌詞影片（新娘唱歌、新郎 RAP）</div>
+                    </td>
+                    <td>
+                        <div style="color: #666; font-size: 12px;">影片內建音效<br>（需確認新人麥克風音量）</div>
+                    </td>
+                </tr>
+                <tr class="highlight-row">
+                    <td class="time-col">13:30</td>
+                    <td class="event-col">猜迪士尼歌曲<br>（約 3 首）</td>
+                    <td colspan="2">
+                        <span class="file-tag folder-tag">📁 資料夾</span>
+                        <span class="file-name">二次進場/猜歌遊戲/</span>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">
+                            依主持人指示播放對應歌曲<br>
+                            ⚠️ 請先確認資料夾內有哪些歌曲檔案
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="time-section">🥂 敬酒 & 二進後用餐（13:40–14:25）</div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="time-col">時間</th>
+                    <th class="event-col">流程</th>
+                    <th>螢幕播放</th>
+                    <th>音樂播放</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="time-col">13:40–13:55</td>
+                    <td class="event-col">敬酒</td>
+                    <td>
+                        <span class="file-tag video-tag">📺 影片</span>
+                        <span class="file-name">用餐/二進後用餐螢幕-婚紗求婚.mp4</span>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">輪播婚紗影片</div>
+                    </td>
+                    <td>
+                        <span class="file-tag audio-tag">🎵 音樂</span>
+                        <span class="file-name">用餐/二進後用餐音樂-中文歌單.MP3</span>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">中文歌曲背景樂</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="time-col">13:55–14:25</td>
+                    <td class="event-col">賓客用餐<br>（新人換裝）</td>
+                    <td>
+                        <span class="file-tag video-tag">📺 影片</span>
+                        <span class="file-name">用餐/二進後用餐螢幕-婚紗求婚.mp4</span>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">持續輪播</div>
+                    </td>
+                    <td>
+                        <span class="file-tag audio-tag">🎵 音樂</span>
+                        <span class="file-name">用餐/二進後用餐音樂-中文歌單.MP3</span>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">持續播放</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="time-section">🎈 三進 & 送客（14:25–結束）</div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="time-col">時間</th>
+                    <th class="event-col">流程</th>
+                    <th>螢幕播放</th>
+                    <th>音樂播放</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="highlight-row">
+                    <td class="time-col">14:20</td>
+                    <td class="event-col">拍攝比愛心 Reels</td>
+                    <td style="text-align: center; background: #f5f5f5;">
+                        <div style="color: #999;">現場畫面</div>
+                    </td>
+                    <td>
+                        <span class="file-tag audio-tag">🎵 音樂</span>
+                        <span class="file-name">三進送客/More of Me (From Tangled Before Ever After) - Natasha Bedingfield (youtube).mp3</span>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">魔髮奇緣主題曲</div>
+                    </td>
+                </tr>
+                <tr class="important-row">
+                    <td class="time-col">14:25</td>
+                    <td class="event-col">三進：新人發氣球</td>
+                    <td style="text-align: center; background: #f5f5f5;">
+                        <div style="color: #999;">現場畫面</div>
+                    </td>
+                    <td>
+                        <span class="file-tag audio-tag">🎵 音樂</span>
+                        <span class="file-name">三進送客/More of Me (From Tangled Before Ever After) - Natasha Bedingfield (youtube).mp3</span>
+                        <div class="cue-point">🎬 持續播放（或從頭播）</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="time-col">14:28</td>
+                    <td class="event-col">新娘致謝詞</td>
+                    <td style="text-align: center; background: #f5f5f5;">
+                        <div style="color: #999;">現場畫面</div>
+                    </td>
+                    <td>
+                        <div style="color: #666; font-size: 12px;">
+                            音樂淡出或暫停<br>
+                            （確保致詞清晰）
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="time-col">14:30</td>
+                    <td class="event-col">謝幕煙火影片</td>
+                    <td>
+                        <div style="color: #666; font-size: 12px;">
+                            ⚠️ 謝幕煙火影片<br>
+                            （確認檔案來源）
+                        </div>
+                    </td>
+                    <td>
+                        <div style="color: #666; font-size: 12px;">影片內建音效</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="time-col">14:30 後</td>
+                    <td class="event-col">送客</td>
+                    <td>
+                        <span class="file-tag video-tag">📺 影片</span>
+                        <span class="file-name">用餐/二進後用餐螢幕-婚紗求婚.mp4</span>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">輪播婚紗影片</div>
+                    </td>
+                    <td>
+                        <span class="file-tag audio-tag">🎵 音樂</span>
+                        <span class="file-name">三進送客/More of Me (From Tangled Before Ever After) - Natasha Bedingfield (youtube).mp3</span>
+                        <div style="color: #666; font-size: 12px; margin-top: 4px;">或播放迎賓音樂</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="info-box" style="margin-top: 30px; background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); border-left-color: #e91e63;">
+            <strong>⚠️ 重要 CUE 點提醒</strong><br>
+            <table style="margin-top: 10px; font-size: 13px;">
+                <tr>
+                    <td style="padding: 5px 15px 5px 0; font-weight: bold;">12:30</td>
+                    <td>播放迪士尼開幕影片 → 婚紗側錄</td>
+                </tr>
+                <tr>
+                    <td style="padding: 5px 15px 5px 0; font-weight: bold;">12:30</td>
+                    <td>花童進場時切換音樂</td>
+                </tr>
+                <tr>
+                    <td style="padding: 5px 15px 5px 0; font-weight: bold;">12:40</td>
+                    <td>新娘進場時切換音樂（最重要！）</td>
+                </tr>
+                <tr>
+                    <td style="padding: 5px 15px 5px 0; font-weight: bold;">13:25</td>
+                    <td>二進歌詞影片播放</td>
+                </tr>
+                <tr>
+                    <td style="padding: 5px 15px 5px 0; font-weight: bold;">14:25</td>
+                    <td>三進音樂播放</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="info-box" style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-left-color: #4caf50;">
+            <strong>✅ 音控檢查清單</strong><br>
+            □ 所有檔案已複製到播放設備<br>
+            □ 確認影片檔案可正常播放<br>
+            □ 確認音樂檔案音量一致<br>
+            □ 測試麥克風音量（主持人、新人）<br>
+            □ 確認猜歌遊戲資料夾內容<br>
+            □ 確認謝幕煙火影片來源
+        </div>
+
+        <div style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #e9ecef; text-align: center; color: #6c757d; font-size: 13px;">
+            <div style="margin-bottom: 8px;">Made with ❤️ for 子擎 & 佩璇's Special Day</div>
+            <div style="display: inline-block; background: #e9ecef; padding: 4px 12px; border-radius: 12px; font-weight: 600;">
+                版本：<span id="site-version">__VERSION__</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
