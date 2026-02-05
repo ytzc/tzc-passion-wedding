@@ -274,7 +274,7 @@
 
     <div class="header">
       <h1>📷 參考資料圖片</h1>
-      <div class="subtitle">點擊圖片可放大檢視</div>
+      <div class="subtitle" id="subtitle">點擊圖片可放大檢視</div>
     </div>
 
     <div class="gallery" id="gallery">
@@ -320,6 +320,17 @@
     ];
 
     let currentIndex = 0;
+
+    // Update subtitle with counts
+    const subtitleEl = document.getElementById('subtitle');
+    const imageCount = images.length;
+    const videoCount = videos.length;
+    let subtitleText = `共 ${imageCount} 張圖片`;
+    if (videoCount > 0) {
+      subtitleText += `、${videoCount} 部影片`;
+    }
+    subtitleText += '，點擊圖片可放大檢視';
+    subtitleEl.textContent = subtitleText;
 
     // Render gallery
     const gallery = document.getElementById('gallery');
