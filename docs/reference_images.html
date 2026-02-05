@@ -298,6 +298,9 @@
 
   <script>
     const images = [
+      'assets/images/ref/主桌擎家-1.png',
+      'assets/images/ref/IMG_4671.JPEG',
+      'assets/images/ref/IMG_4697.JPEG',
       'assets/images/ref/IMG_2318.JPEG',
       'assets/images/ref/IMG_2334.JPEG',
       'assets/images/ref/IMG_2363.jpg',
@@ -312,6 +315,10 @@
       'assets/images/ref/IMG_6001.JPEG'
     ];
 
+    const videos = [
+      'assets/images/ref/video_599589436724609603-DmtmPWuG.MP4'
+    ];
+
     let currentIndex = 0;
 
     // Render gallery
@@ -324,6 +331,21 @@
         <img src="${src}" alt="參考圖片 ${index + 1}" loading="lazy">
         <div class="overlay">
           <span>點擊放大</span>
+        </div>
+      `;
+      gallery.appendChild(item);
+    });
+
+    // Render videos
+    videos.forEach((src, index) => {
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      item.innerHTML = `
+        <video controls style="width:100%; height:220px; object-fit:cover;">
+          <source src="${src}" type="video/mp4">
+        </video>
+        <div class="overlay" style="opacity:1; background:linear-gradient(transparent, rgba(0,0,0,0.5));">
+          <span>🎬 參考影片 ${index + 1}</span>
         </div>
       `;
       gallery.appendChild(item);
